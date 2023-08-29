@@ -3,13 +3,16 @@ import { Web3Modal } from '@web3modal/react'
 import { configureChains, createConfig, WagmiConfig } from 'wagmi'
 import { sepolia } from 'wagmi/chains'
 import ConnectWallet from './Pages/ConnectWallet/ConnectWallet'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Routes, Route } from "react-router-dom";
 import Homepage from "./Pages/Homepage/Homepage"
 import Profile from "./Pages/Profile/Profile"
 import SavedPosts from "./Pages/SavedPosts/SavedPosts"
 import PostDetail from "./Pages/PostDetail/PostDetail"
 import CreateProfile from './Pages/CreateProfile/CreateProfile'
+import { publicProvider } from "wagmi/providers/public";
+import { ethers } from "ethers";
+import { contractAddress, contractABI } from './constant.js'
 
 
 const chains = [sepolia]
@@ -26,6 +29,54 @@ const ethereumClient = new EthereumClient(wagmiConfig, chains)
 function App() {
   const [isConnected, setIsConnected] = useState(false);
   const [accountAddress, setAccountAddress] = useState(null);
+  const [signer, setSigner] = useState(null);
+  const [contract, setContract] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isProfileCreated, setIsProfileCreated] = useState(null);
+
+  async function loadBcData() {
+    try {
+      if (window.ethereum) {
+        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const signer = provider.getSigner();
+        setSigner(signer);
+        const contractInstance = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer
+        );
+        console.log(contractInstance);
+        setContract(contractInstance);
+        setIsLoading(false);
+        const address = await signer.getAddress();
+        console.log("Metamask Connected to " + address);
+        setAccountAddress(address);
+      } else {
+        const provider = new ethers.providers.Web3Provider(publicProvider);
+        const signer = provider.getSigner();
+        setSigner(signer);
+        const contractInstance = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer
+        );
+        console.log(contractInstance);
+        setContract(contractInstance);
+        setIsLoading(false);
+        const address = await signer.getAddress();
+        console.log("Public Provider Connected to " + address);
+        setAccountAddress(address);
+      }
+    } catch (error) {
+      setIsLoading(false);
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    loadBcData();
+  }, []);
+
   return (
     <div className='App'>
       <Routes>
@@ -35,8 +86,10 @@ function App() {
             <>
               <WagmiConfig config={wagmiConfig}>
                 <ConnectWallet
+                  contract={contract}
                   setIsConnected={setIsConnected}
                   setAccountAddress={setAccountAddress}
+                  setIsProfileCreated={setIsProfileCreated}
                 />
                 <Web3Modal projectId={projectId} ethereumClient={ethereumClient} />
               </WagmiConfig>
@@ -45,7 +98,7 @@ function App() {
         />
         <Route
           path='/createprofile'
-          element={<CreateProfile />}
+          element={<CreateProfile contract={contract} />}
         />
         <Route
           path='/homepage'
