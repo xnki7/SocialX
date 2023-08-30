@@ -10,6 +10,7 @@ import Profile from "./Pages/Profile/Profile"
 import SavedPosts from "./Pages/SavedPosts/SavedPosts"
 import PostDetail from "./Pages/PostDetail/PostDetail"
 import CreateProfile from './Pages/CreateProfile/CreateProfile'
+import CreatePost from './Pages/CreatePost/CreatePost'
 import { publicProvider } from "wagmi/providers/public";
 import { ethers } from "ethers";
 import { contractAddress, contractABI } from './constant.js'
@@ -99,6 +100,10 @@ function App() {
         <Route
           path='/createprofile'
           element={<CreateProfile contract={contract} />}
+        />
+        <Route
+          path='/createpost'
+          element={<CreatePost contract={contract} />}
         />
         <Route
           path='/homepage'
