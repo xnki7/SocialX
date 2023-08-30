@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import Post from '../../Components/Post/Post';
 import "./Homepage.css"
 
 const Homepage = ({ contract }) => {
@@ -68,11 +69,9 @@ const Homepage = ({ contract }) => {
             <h2>Homepage</h2>
             {posts && posts.map((post) => (
                 <div key={post.postId}>
-                    <h1>{post.postOwner}</h1>
-                    {post.metadata ? <h2>{post.metadata.textContent}</h2> : <p>No metadata available</p>}
+                    {post.metadata ? <Post contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <p>No metadata available</p>}
                 </div>
             ))}
-
         </div>
     )
 }

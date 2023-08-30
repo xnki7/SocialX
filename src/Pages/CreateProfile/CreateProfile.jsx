@@ -45,6 +45,7 @@ const CreateProfile = ({ contract }) => {
             }
 
             const profileData = {
+                userName: userName,
                 bio: bio,
                 imageCID: imageCID,
             };
