@@ -22,7 +22,7 @@ const ConnectWallet = ({ contract, setIsConnected, setAccountAddress, setIsProfi
             navigate('/createprofile');
         }
         else {
-            navigate('/createpost')
+            navigate('/homepage')
         }
     }
     return <div className="ConnectWallet">

@@ -107,7 +107,7 @@ function App() {
         />
         <Route
           path='/homepage'
-          element={<Homepage />}
+          element={<Homepage contract={contract} />}
         />
         <Route
           path='/homepage/:id'
