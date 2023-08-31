@@ -1,4 +1,4 @@
-const contractAddress = "0x25E4507458a702d906Bab88aBac65F99A5B801b8";
+const contractAddress = "0x404f21B4D76645db5Adf8487C4F7b7573CDbB9A5";
 
 const contractABI = [
 	{
@@ -317,6 +317,42 @@ const contractABI = [
 				"internalType": "string",
 				"name": "",
 				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_postId",
+				"type": "uint256"
+			}
+		],
+		"name": "getPostComments",
+		"outputs": [
+			{
+				"components": [
+					{
+						"internalType": "address",
+						"name": "commentOwner",
+						"type": "address"
+					},
+					{
+						"internalType": "uint256",
+						"name": "commentTimestamp",
+						"type": "uint256"
+					},
+					{
+						"internalType": "string",
+						"name": "commentCID",
+						"type": "string"
+					}
+				],
+				"internalType": "struct SocialX.Comment[]",
+				"name": "",
+				"type": "tuple[]"
 			}
 		],
 		"stateMutability": "view",

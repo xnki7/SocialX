@@ -256,4 +256,10 @@ contract SocialX {
     function getCommentsNumber(uint256 _postId) public view returns (uint256) {
         return postComments[_postId].length;
     }
+
+    function getPostComments(
+        uint256 _postId
+    ) public view returns (Comment[] memory) {
+        return postComments[_postId];
+    }
 }

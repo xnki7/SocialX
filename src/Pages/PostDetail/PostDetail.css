@@ -1,0 +1,8 @@
+.PostDetail .commentBox {
+    border: 2px solid black;
+    margin-bottom: 2rem;
+}
+
+.PostDetail .commentBox img{
+    width: 2rem;
+}
