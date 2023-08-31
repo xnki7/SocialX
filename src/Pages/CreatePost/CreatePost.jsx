@@ -85,8 +85,8 @@ const CreatePost = ({ contract }) => {
         <div className='CreatePost'>
             <form onSubmit={handleFormSubmit}>
                 <h2>Create Post</h2>
-                <input type="text" required value={textContent} onChange={(e) => setTextContent(e.target.value)} />
-                <input type="file" name="" id="" accept="image/*" multiple onChange={handleImageUpload} />
+                <input type="text" placeholder='Caption...' value={textContent} onChange={(e) => setTextContent(e.target.value)} />
+                <input type="file" required name="" id="" accept="image/*" multiple onChange={handleImageUpload} />
                 <button type="submit">Create Post</button>
             </form>
         </div>

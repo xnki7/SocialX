@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import "./Post.css";
 
 const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs }) => {
@@ -32,8 +33,9 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
 
     const likePost = async () => {
         const tx = await contract.likePost(postId);
-        tx.wait();
-        getLikesNumber();
+        await tx.wait();
+        setLikesNumber((prevLikes) => ++prevLikes);
+        setIsLiked(true);
     }
 
     const fetchProfileMetadata = async (postURI) => {
@@ -76,13 +78,17 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                 <p className="timestamp">{formatDate(timestamp)}</p>
                 <p className="address">{postOwner}</p>
             </div>
-            <div className="content">
-                <p className="textContent">{textContent}</p>
-                {postPicCIDs.map((pic) => { return <img key={pic} src={`https://ipfs.io/ipfs/${pic}`} alt="" /> })}
-            </div>
+            <Link to={`/homepage/${postId}`}>
+                <div className="content">
+                    <p className="textContent">{textContent}</p>
+                    {postPicCIDs ? postPicCIDs.map((pic) => { return <img key={pic} src={`https://ipfs.io/ipfs/${pic}`} alt="" /> }) : <></>}
+                </div>
+            </Link>
             <div className="footer">
                 <p className="likecount">{likesNumber.toString() + " "}Likes</p>
-                {isLiked ? <button disabled>Liked</button> : <button onClick={likePost}>Like</button>}
+                <button disabled={isLiked} onClick={likePost}>
+                    {isLiked ? 'Liked' : 'Like'}
+                </button>
                 <p className="commentcount">{commentsNumber.toString() + " "}Comments</p>
             </div>
         </div>

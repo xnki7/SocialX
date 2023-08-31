@@ -110,8 +110,8 @@ function App() {
           element={<Homepage contract={contract} />}
         />
         <Route
-          path='/homepage/:id'
-          element={<PostDetail />}
+          path='/homepage/:postId'
+          element={<PostDetail contract={contract} />}
         />
         <Route
           path='/profile'
@@ -122,7 +122,7 @@ function App() {
           element={<SavedPosts />}
         />
         <Route
-          path='/savedposts/:id'
+          path='/savedposts/:postId'
           element={<PostDetail />}
         />
       </Routes>
