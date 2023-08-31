@@ -236,4 +236,24 @@ contract SocialX {
     function getUserSavedPosts() public view returns (Post[] memory) {
         return userSavedPosts[msg.sender];
     }
+
+    function getPost(uint256 _postId) public view returns (Post memory) {
+        return idToPost[_postId];
+    }
+
+    function getPostCID(uint256 _postId) public view returns (string memory) {
+        return idToPost[_postId].postCID;
+    }
+
+    function UserLikedPost(uint256 _postId) public view returns (bool) {
+        return hasUserLikedPost[msg.sender][_postId];
+    }
+
+    function getLikesNumber(uint256 _postId) public view returns (uint256) {
+        return postLikes[_postId];
+    }
+
+    function getCommentsNumber(uint256 _postId) public view returns (uint256) {
+        return postComments[_postId].length;
+    }
 }

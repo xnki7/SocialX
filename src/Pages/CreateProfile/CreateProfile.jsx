@@ -2,10 +2,12 @@ import React from 'react'
 import "./CreateProfile.css"
 import { useState } from 'react'
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 import img from "./createPic.png"
 import logo from "../ConnectWallet/SocialX.png"
 
 const CreateProfile = ({ contract }) => {
+    const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
@@ -64,6 +66,7 @@ const CreateProfile = ({ contract }) => {
 
             const tx = await contract.createUserProfile(profileUploadResponse.data.IpfsHash);
             await tx.wait();
+            navigate('/homepage')
 
             setUserName(""); // Clear the username input
             setImage(null); // Clear the image
