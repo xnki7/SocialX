@@ -23,6 +23,7 @@ contract SocialX {
     }
 
     Post[] public allPosts; // Array to store all posts
+    UserProfile[] public allProfiles; // Array to store all posts
 
     mapping(address => UserProfile) Profiles;
     mapping(address => bool) isProfileCreated;
@@ -40,7 +41,12 @@ contract SocialX {
 
     // Function to create a user profile
     function createUserProfile(string memory _userProfileCID) public {
-        Profiles[msg.sender] = UserProfile(msg.sender, _userProfileCID);
+        UserProfile memory userProfile = UserProfile(
+            msg.sender,
+            _userProfileCID
+        );
+        Profiles[msg.sender] = userProfile;
+        allProfiles.push(userProfile);
         isProfileCreated[msg.sender] = true;
     }
 
@@ -208,6 +214,10 @@ contract SocialX {
         return userFollowingProfiles[_userAddress];
     }
 
+    function getAllProfiles() public view returns (UserProfile[] memory) {
+        return allProfiles;
+    }
+
     // Function to get user profile
     function getUserProfile(
         address _userAddress
@@ -261,5 +271,9 @@ contract SocialX {
         uint256 _postId
     ) public view returns (Comment[] memory) {
         return postComments[_postId];
+    }
+
+    function getIsUserFollowing(address _user) public view returns (bool) {
+        return isUserFollowing[msg.sender][_user];
     }
 }
