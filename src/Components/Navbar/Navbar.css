@@ -1,0 +1,31 @@
+.Navbar {
+    width: 100%;
+}
+
+.Navbar .subNavbar {
+    height: 3rem;
+    margin-left: 5%;
+    width: 90%;
+    background-color: #1A1A1D;
+    border: 2px solid #4E4E50;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Navbar .subNavbar .sub2Navbar {
+    width: 90%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.Navbar img.navIcons {
+    width: 2rem;
+}
+
+.Navbar img.profileIcon {
+    border-radius: 100%;
+}

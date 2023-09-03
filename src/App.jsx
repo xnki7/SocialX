@@ -108,7 +108,7 @@ function App() {
         />
         <Route
           path='/homepage'
-          element={<Homepage contract={contract} />}
+          element={<Homepage contract={contract} accountAddress={accountAddress} />}
         />
         <Route
           path='/homepage/:postId'
