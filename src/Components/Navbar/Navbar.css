@@ -1,5 +1,7 @@
 .Navbar {
     width: 100%;
+    position: sticky;
+    top: 92vh;
 }
 
 .Navbar .subNavbar {
@@ -22,8 +24,12 @@
     justify-content: space-between;
 }
 
+
+
 .Navbar img.navIcons {
     width: 2rem;
+    display: flex;
+    align-items: center;
 }
 
 .Navbar img.profileIcon {

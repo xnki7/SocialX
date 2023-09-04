@@ -95,8 +95,8 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
             </div>
             <Link to={`/homepage/${postId}`}>
                 <div className="content">
-                    <p className="textContent">{textContent}</p>
-                    {postPicCIDs ? postPicCIDs.map((pic) => { return <img key={pic} src={`https://ipfs.io/ipfs/${pic}`} alt="" /> }) : <></>}
+                    {postPicCIDs ? postPicCIDs.map((pic) => { return <img className='postImage' key={pic} src={`https://ipfs.io/ipfs/${pic}`} alt="" /> }) : <></>}
+
                 </div>
             </Link>
             <div className="footer">
@@ -106,6 +106,10 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                 </button>
                 <p className="commentcount">{commentsNumber.toString() + " "}Comments</p>
                 <button disabled={isSaved} onClick={savePost}> {isSaved ? 'Saved' : 'Save Post'}</button>
+            </div>
+            <div className='nameNCaption'>
+                {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <p>loading..</p>}
+                <p className="textContent">{textContent}</p>
             </div>
         </div>
     )

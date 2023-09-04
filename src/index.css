@@ -13,6 +13,9 @@ html,
   padding: 0;
   font-family: 'Poppins', sans-serif;
 }
+body{
+  background-color: #1A1A1D;
+}
 
 /* Media query for phones */
 @media (min-width: 320px) {
