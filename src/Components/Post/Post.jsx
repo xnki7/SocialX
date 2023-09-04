@@ -8,6 +8,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
     const [likesNumber, setLikesNumber] = useState(0);
     const [commentsNumber, setCommentsNumber] = useState(0);
     const [isLiked, setIsLiked] = useState(false);
+    const [isSaved, setIsSaved] = useState(false);
 
     const getProfileData = async () => {
         const tx = await contract.getUserProfile(postOwner);
@@ -19,6 +20,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
         const tx = await contract.getLikesNumber(postId);
         setLikesNumber(tx);
         getIsPostLiked();
+        getIsPostSaved();
     }
 
     const getIsPostLiked = async () => {
@@ -26,9 +28,20 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
         setIsLiked(tx);
     }
 
+    const getIsPostSaved = async () => {
+        const tx = await contract.getIsPostSaved(postId);
+        setIsSaved(tx);
+    }
+
     const getCommentsNumber = async () => {
         const tx = await contract.getCommentsNumber(postId);
         setCommentsNumber(tx);
+    }
+
+    const savePost = async () => {
+        const tx = await contract.savePost(postId);
+        await tx.wait();
+        setIsSaved(true);
     }
 
     const likePost = async () => {
@@ -92,6 +105,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                     {isLiked ? 'Liked' : 'Like'}
                 </button>
                 <p className="commentcount">{commentsNumber.toString() + " "}Comments</p>
+                <button disabled={isSaved} onClick={savePost}> {isSaved ? 'Saved' : 'Save Post'}</button>
             </div>
         </div>
     )

@@ -1,83 +1,6 @@
-const contractAddress = "0x13d7f77C8784Eb4C0678fE8367F7Df51Ec071Db6";
+const contractAddress = "0xBc245076dfb06fcEf3A72C4F084576747425577E";
 
 const contractABI = [
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_postId",
-				"type": "uint256"
-			}
-		],
-		"name": "UserLikedPost",
-		"outputs": [
-			{
-				"internalType": "bool",
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "allPosts",
-		"outputs": [
-			{
-				"internalType": "uint256",
-				"name": "postId",
-				"type": "uint256"
-			},
-			{
-				"internalType": "address",
-				"name": "postOwner",
-				"type": "address"
-			},
-			{
-				"internalType": "uint256",
-				"name": "postTimestamp",
-				"type": "uint256"
-			},
-			{
-				"internalType": "string",
-				"name": "postCID",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"name": "allProfiles",
-		"outputs": [
-			{
-				"internalType": "address",
-				"name": "userAddress",
-				"type": "address"
-			},
-			{
-				"internalType": "string",
-				"name": "userProfileCID",
-				"type": "string"
-			}
-		],
-		"stateMutability": "view",
-		"type": "function"
-	},
 	{
 		"inputs": [
 			{
@@ -175,6 +98,103 @@ const contractABI = [
 		"type": "function"
 	},
 	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_postId",
+				"type": "uint256"
+			}
+		],
+		"name": "likePost",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_postId",
+				"type": "uint256"
+			}
+		],
+		"name": "savePost",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			}
+		],
+		"name": "unfollowUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "allPosts",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "postId",
+				"type": "uint256"
+			},
+			{
+				"internalType": "address",
+				"name": "postOwner",
+				"type": "address"
+			},
+			{
+				"internalType": "uint256",
+				"name": "postTimestamp",
+				"type": "uint256"
+			},
+			{
+				"internalType": "string",
+				"name": "postCID",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
+			}
+		],
+		"name": "allProfiles",
+		"outputs": [
+			{
+				"internalType": "address",
+				"name": "userAddress",
+				"type": "address"
+			},
+			{
+				"internalType": "string",
+				"name": "userProfileCID",
+				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [],
 		"name": "getAllPosts",
 		"outputs": [
@@ -248,6 +268,25 @@ const contractABI = [
 				"internalType": "uint256",
 				"name": "",
 				"type": "uint256"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_postId",
+				"type": "uint256"
+			}
+		],
+		"name": "getIsPostSaved",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
@@ -577,35 +616,15 @@ const contractABI = [
 				"type": "uint256"
 			}
 		],
-		"name": "likePost",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
+		"name": "UserLikedPost",
+		"outputs": [
 			{
-				"internalType": "uint256",
-				"name": "_postId",
-				"type": "uint256"
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
-		"name": "savePost",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "address",
-				"name": "_userAddress",
-				"type": "address"
-			}
-		],
-		"name": "unfollowUser",
-		"outputs": [],
-		"stateMutability": "nonpayable",
+		"stateMutability": "view",
 		"type": "function"
 	}
 ];
