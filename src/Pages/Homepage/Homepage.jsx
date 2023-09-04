@@ -1,6 +1,7 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 import Post from '../../Components/Post/Post';
 import "./Homepage.css"
 import Navbar from "../../Components/Navbar/Navbar"
@@ -68,6 +69,9 @@ const Homepage = ({ contract, accountAddress }) => {
     return (
         <div className='Homepage'>
             <Navbar contract={contract} accountAddress={accountAddress} />
+            <Link to='/savedposts'>
+                <button>Saved Posts</button>
+            </Link>
             <h2>Homepage</h2>
             {posts && posts.map((post) => (
                 <div key={post.postId}>

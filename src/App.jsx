@@ -128,7 +128,7 @@ function App() {
         />
         <Route
           path='/savedposts'
-          element={<SavedPosts />}
+          element={<SavedPosts contract={contract} accountAddress={accountAddress} />}
         />
         <Route
           path='/savedposts/:postId'
