@@ -73,10 +73,12 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
     return (
         <div className='Post'>
             <div className="header">
-                {profileData && profileData.imageCID ? <img src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" /> : <p>loading..</p>}
-                {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <p>loading..</p>}
-                <p className="timestamp">{formatDate(timestamp)}</p>
-                <p className="address">{postOwner}</p>
+                {profileData && profileData.imageCID ? <img src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" className='profileImage' /> : <p>loading..</p>}
+                <div className='uNameContainer'>
+                    {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <p>loading..</p>}
+                    <p className="timestamp">{formatDate(timestamp)}</p>
+                </div>
+                {/* <p className="address">{postOwner}</p> */}
             </div>
             <Link to={`/homepage/${postId}`}>
                 <div className="content">

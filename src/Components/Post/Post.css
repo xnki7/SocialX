@@ -1,8 +1,35 @@
 .Post {
     border: 2px solid black;
-    margin-bottom: 2rem;
+    margin: 1rem auto ;
+    width: 328px;
+    border-radius: 20px;
+    height: 32rem;
+    background-color: #262629;
+    color: white;
 }
 
-.Post img {
-    width: 5rem;
+.Post .header{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.7rem 0 0 0.7rem;
+}
+
+.Post .profileImage{
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+}
+
+.Post .username{
+    font-size: 0.875rem;
+    font-weight: 600;
+}
+
+.Post .uNameContainer{
+    margin-left: 1rem;
+}
+.Post .uNameContainer .timestamp{
+    font-size: 0.5rem;
+    color: #939394;
 }
