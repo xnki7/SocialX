@@ -116,7 +116,11 @@ function App() {
         />
         <Route
           path='/profile'
-          element={<Profile />}
+          element={<Profile contract={contract} accountAddress={accountAddress} />}
+        />
+        <Route
+          path='/profile/:postId'
+          element={<PostDetail contract={contract} />}
         />
         <Route
           path='/searchprofiles'
