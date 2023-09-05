@@ -35,7 +35,7 @@
 .Post .profileImage {
     width: 3rem;
     height: 3rem;
-    margin-left: 1rem;
+    margin-left: 3%;
     border-radius: 50%;
 }
 
@@ -55,6 +55,8 @@
 
 .Post .content {
     width: 100%;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -72,15 +74,16 @@
     background: none;
     border: none;
     padding: 0;
-    width: 19.54px;
-    height: 18px;
+    cursor: pointer;
+    /* width: 19.54px;
+    height: 1rem; */
 }
 
 .postContainers {
     display: flex;
     justify-content: space-between;
     /* max-width: 17.875rem; */
-    width: 90%;
+    width: 92%;
     align-items: center;
     margin: 0 auto;
     margin-top: 1rem;
@@ -110,11 +113,12 @@
 .nameNCaption {
     justify-content: flex-start;
     gap: 0.5rem;
-    margin-top: 0.75rem;
+    margin-top: 0rem;
+    padding-bottom: 1rem;
 }
 
 .textContent {
-    font-size: 10px;
+    font-size: 0.75rem;
     color: #939394;
 }
 
