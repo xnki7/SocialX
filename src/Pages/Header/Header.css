@@ -7,6 +7,8 @@
     align-items: center;
     position: fixed;
     border-radius: 20px;
+    background-color: #1A1A1D;
+    border: 2px solid #4E4E50;
     /* margin: 0.8125rem; */
     margin-bottom: 0;
     /* padding: 0 1.75rem; */
@@ -24,6 +26,6 @@
     align-items: center;
 }
 
-.headerContainer button.postBtns{
+.headerContainer button.postBtns {
     margin-right: 2rem;
 }
