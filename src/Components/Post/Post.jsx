@@ -100,22 +100,12 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                 </div>
             </Link>
             <div className="footer">
-                <div className='postBtnContainer'>
-                    <div className='likeCommentBtnContainer'>
-                        <button className='postBtns' disabled={isLiked} onClick={likePost}>
-                            {isLiked ? <img src='Images/Liked.svg' /> : <img src='Images/Like.svg' />}
-                        </button>
-
-                        <button className="postBtns">
-                            <img src="Images/Comment.svg" alt="" />
-                        </button>
-                    </div>
-
-                    <button className='postBtns' disabled={isSaved} onClick={savePost}> {isSaved ? <img src='Images/Saved.svg' /> : <img src='Images/Save.svg' />}</button>
-                </div>
                 <p className="likecount">{likesNumber.toString() + " "}Likes</p>
-
+                <button disabled={isLiked} onClick={likePost}>
+                    {isLiked ? 'Liked' : 'Like'}
+                </button>
                 <p className="commentcount">{commentsNumber.toString() + " "}Comments</p>
+                <button disabled={isSaved} onClick={savePost}> {isSaved ? 'Saved' : 'Save Post'}</button>
             </div>
             <div className='nameNCaption'>
                 {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <p>loading..</p>}
