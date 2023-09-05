@@ -74,3 +74,4 @@ const SearchProfiles = ({ contract }) => {
 }
 
 export default SearchProfiles
+

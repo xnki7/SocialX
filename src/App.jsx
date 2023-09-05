@@ -115,17 +115,13 @@ function App() {
           path='/homepage/:postId'
           element={<PostDetail contract={contract} />}
         />
-        <Route
+        {/* <Route
           path='/profile'
           element={<Profile contract={contract} accountAddress={accountAddress} />}
-        />
+        /> */}
         <Route
           path='/profile/editprofile'
           element={<EditProfile contract={contract} accountAddress={accountAddress} />}
-        />
-        <Route
-          path='/profile/:postId'
-          element={<PostDetail contract={contract} />}
         />
         <Route
           path='/searchprofiles'
@@ -138,6 +134,10 @@ function App() {
         <Route
           path='/savedposts/:postId'
           element={<PostDetail />}
+        />
+        <Route
+          path='/profile/:accountAddress'
+          element={<Profile contract={contract} />}
         />
       </Routes>
     </div>

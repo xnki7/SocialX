@@ -18,7 +18,8 @@
 
 .headerContainer .logoImg {
     margin: auto;
-    width: 6.75rem
+    width: 10rem;
+    padding-left: 3.5rem;
 }
 
 .headerContainer button {

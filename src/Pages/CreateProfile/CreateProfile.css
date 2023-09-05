@@ -33,7 +33,7 @@
     padding: 2rem 2.5rem;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 1rem;
-    height: 55%;
+    height: 65%;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -71,7 +71,7 @@
     padding: 0 0.75rem;
 }
 
-.CreateProfile .inputBox input:focus{
+.CreateProfile .inputBox input:focus {
     outline: none;
 }
 

@@ -45,7 +45,7 @@
 }
 
 .Post .uNameContainer {
-    margin-left: 0.5rem;
+    margin-left: 0.65rem;
 }
 
 .Post .uNameContainer .timestamp {
@@ -62,9 +62,11 @@
     justify-content: center;
 }
 
+
 .Post .postImage {
     height: 19rem;
-    max-width: 100%;
+    max-width: 95%;
+    margin-left: 2.5%;
     width: auto;
     /* margin: 0.75rem 0.75rem; */
     border-radius: 1.25rem;

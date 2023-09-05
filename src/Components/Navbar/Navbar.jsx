@@ -43,7 +43,7 @@ const Navbar = ({ contract, accountAddress }) => {
                     <Link to="/createpost">
                         <img className='navIcons' src={plus} alt="" />
                     </Link>
-                    <Link to="/profile">
+                    <Link to={`/profile/${accountAddress}`}>
                         {profileData && profileData.imageCID ? <img className='navIcons profileIcon' src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" /> : <img className='navIcons profileIcon' src="Images/Profile.svg" alt="" /> }
                     </Link>
                 </div>

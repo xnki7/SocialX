@@ -2,6 +2,8 @@ import React from 'react'
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Post from '../../Components/Post/Post';
+import Header from '../Header/Header';
+import Navbar from '../../Components/Navbar/Navbar';
 import "./SavedPosts.css"
 
 const SavedPosts = ({ contract, accountAddress }) => {
@@ -66,11 +68,17 @@ const SavedPosts = ({ contract, accountAddress }) => {
 
     return (
         <div className='SavedPosts'>
-            {posts && posts.map((post) => (
-                <div key={post.postId}>
-                    {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <p>No metadata available</p>}
-                </div>
-            ))}
+            <div className="header">
+                <Header />
+            </div>
+            <div className="posts">
+                {posts && posts.map((post) => (
+                    <div key={post.postId}>
+                        {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <p>No metadata available</p>}
+                    </div>
+                ))}
+            </div>
+            <Navbar contract={contract} accountAddress={accountAddress} />
         </div>
     )
 }
