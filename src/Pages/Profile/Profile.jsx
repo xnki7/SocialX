@@ -5,7 +5,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import "./Profile.css"
 
-const Profile = ({ contract }) => {
+const Profile = ({ contract, myAddress }) => {
     const { accountAddress } = useParams();
     const [profileData, setProfileData] = useState(null);
     const [posts, setPosts] = useState([]);
@@ -116,8 +116,18 @@ const Profile = ({ contract }) => {
 
     return (
         <div className='Profile'>
-            <button>Edit Profile</button>
-            {!isFollowing ? <button onClick={followUser}>Follow</button> : <button onClick={unfollowUser}>Unfollow</button>}
+            {
+                (myAddress === accountAddress) ? <button>Edit Profile</button> : <></>
+            }
+            {(myAddress !== accountAddress) ? (
+                !isFollowing ? (
+                    <button onClick={followUser}>Follow</button>
+                ) : (
+                    <button onClick={unfollowUser}>Unfollow</button>
+                )
+            ) : (
+                <></>
+            )}
             {profileData && profileData.imageCID ? <img className='navIcons profileIcon' src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" /> : <p>loading..</p>}
             {profileData && profileData.userName ? <p>{profileData.userName}</p> : <p>loading</p>}
             {profileData && profileData.bio ? <p>{profileData.bio}</p> : <p>loading</p>}

@@ -137,7 +137,7 @@ function App() {
         />
         <Route
           path='/profile/:accountAddress'
-          element={<Profile contract={contract} />}
+          element={<Profile contract={contract} myAddress={accountAddress} />}
         />
       </Routes>
     </div>
