@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import Post from '../../Components/Post/Post';
 import "./Homepage.css"
 import Navbar from "../../Components/Navbar/Navbar"
+import Header from '../Header/Header';
 
 const Homepage = ({ contract, accountAddress }) => {
     const [posts, setPosts] = useState([]);
@@ -68,10 +69,8 @@ const Homepage = ({ contract, accountAddress }) => {
 
     return (
         <div className='Homepage'>
+            <Header/>
             <Navbar contract={contract} accountAddress={accountAddress} />
-            <Link to='/savedposts'>
-                <button>Saved Posts</button>
-            </Link>
             {/* <h2>Homepage</h2> */}
             {posts && posts.map((post) => (
                 <div key={post.postId}>
