@@ -1,4 +1,4 @@
-const contractAddress = "0xBc245076dfb06fcEf3A72C4F084576747425577E";
+const contractAddress = "0x1619c2c414C6A1C85A3BE2F745543024802160f0";
 
 const contractABI = [
 	{
@@ -508,7 +508,13 @@ const contractABI = [
 		"type": "function"
 	},
 	{
-		"inputs": [],
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			}
+		],
 		"name": "getUserPosts",
 		"outputs": [
 			{

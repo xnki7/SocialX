@@ -9,14 +9,78 @@ const Profile = ({ contract, myAddress }) => {
     const { accountAddress } = useParams();
     const [profileData, setProfileData] = useState(null);
     const [posts, setPosts] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [isFollowing, setIsFollowing] = useState(false);
+    const [followings, setFollowings] = useState([]);
+    const [followers, setFollowers] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
+    const fetchProfileMetadata1 = async (postURI) => {
+        try {
+            const response = await axios.get(`https://ipfs.io/ipfs/${postURI}`);
+            return response.data;
+        } catch (error) {
+            console.error("Error fetching Profile metadata:", error);
+            return null;
+        }
+    };
+
+    useEffect(() => {
+        const fetchProfileDetails1 = async () => {
+            setIsLoading(true);
+            const updatedProfiles1 = await Promise.all(
+                followings.map(async (follows) => {
+                    let metadata = null;
+                    try {
+                        metadata = await fetchProfileMetadata1(follows.userProfileCID);
+                    } catch (error) {
+                        console.error("Error fetching metadata:", error);
+                    }
+                    console.log("Metadata for profile:", metadata);
+                    return { ...follows, metadata };
+                })
+            );
+            console.log("Updated Profile:", updatedProfiles1);
+            setFollowings(updatedProfiles1);
+        };
+
+        const fetchProfileDetails2 = async () => {
+            setIsLoading(true);
+            const updatedProfiles2 = await Promise.all(
+                followers.map(async (follower) => {
+                    let metadata = null;
+                    try {
+                        metadata = await fetchProfileMetadata1(follower.userProfileCID);
+                    } catch (error) {
+                        console.error("Error fetching metadata:", error);
+                    }
+                    console.log("Metadata for profile:", metadata);
+                    return { ...follower, metadata };
+                })
+            );
+            console.log("Updated Profile:", updatedProfiles2);
+            setFollowers(updatedProfiles2);
+            setIsLoading(false);
+        };
+
+        const fetchProfiles = async () => {
+            if (followings.length > 0 && !followings[0].metadata) {
+                await fetchProfileDetails1();
+            }
+            if (followers.length > 0 && !followers[0].metadata) {
+                await fetchProfileDetails2();
+            }
+        };
+
+        fetchProfiles();
+    }, [followings, followers]);
 
     const followUser = async () => {
         try {
             const tx = await contract.followUser(accountAddress);
             await tx.wait(); // Wait for the transaction to confirm
             getIsFollowing();
+            getFollowers();
+            getFollowings();
         } catch (error) {
             console.error("Error following user:", error);
         }
@@ -27,20 +91,31 @@ const Profile = ({ contract, myAddress }) => {
             const tx = await contract.unfollowUser(accountAddress);
             await tx.wait(); // Wait for the transaction to confirm
             getIsFollowing();
+            getFollowers();
+            getFollowings();
         } catch (error) {
             console.error("Error unfollowing user:", error);
         }
     }
-
 
     const getIsFollowing = async () => {
         const tx = await contract.getIsUserFollowing(accountAddress);
         setIsFollowing(tx);
     }
 
+    const getFollowings = async () => {
+        const tx = await contract.getUserFollowings(accountAddress);
+        setFollowings(tx);
+    }
+
+    const getFollowers = async () => {
+        const tx = await contract.getUserFollowers(accountAddress);
+        setFollowers(tx);
+    }
+
     const getPosts = async () => {
         try {
-            const tx = await contract.getUserPosts();
+            const tx = await contract.getUserPosts(accountAddress);
             console.log(tx);
             setPosts(tx);
         } catch (error) {
@@ -110,6 +185,8 @@ const Profile = ({ contract, myAddress }) => {
             getProfileData();
             getPosts();
             getIsFollowing();
+            getFollowings();
+            getFollowers();
             console.log(accountAddress);
         }
     }, [contract, accountAddress])
@@ -132,6 +209,9 @@ const Profile = ({ contract, myAddress }) => {
             {profileData && profileData.userName ? <p>{profileData.userName}</p> : <p>loading</p>}
             {profileData && profileData.bio ? <p>{profileData.bio}</p> : <p>loading</p>}
 
+            <p>{followers.length} Followers</p>
+            <p>{followings.length} Following</p>
+
             <div className="posts">
                 {posts.map((post) => {
                     if (post.metadata && post.metadata.imageCIDs) {
@@ -143,6 +223,36 @@ const Profile = ({ contract, myAddress }) => {
                     } else {
                         return null; // Render nothing if metadata or imageCIDs are missing
                     }
+                })}
+            </div>
+
+            <div className="followings">
+                <h1>Followings</h1>
+                {followings && followings.map((follows) => {
+                    return <>
+                        <Link to={`/profile/${follows.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
+                            <div className="profileBox">
+                                {follows.metadata && <p>{follows.metadata.userName}</p>}
+                                {follows.metadata && <img src={`https://ipfs.io/ipfs/${follows.metadata.imageCID}`} alt="" />}
+                                <p>{follows.userAddress}</p>
+                            </div>
+                        </Link >
+                    </>
+                })}
+            </div>
+
+            <div className="followers">
+                <h1>Followers</h1>
+                {followers && followers.map((follower) => {
+                    return <>
+                        <Link to={`/profile/${follower.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
+                            <div className="profileBox">
+                                {follower.metadata && <p>{follower.metadata.userName}</p>}
+                                {follower.metadata && <img src={`https://ipfs.io/ipfs/${follower.metadata.imageCID}`} alt="" />}
+                                <p>{follower.userAddress}</p>
+                            </div>
+                        </Link>
+                    </>
                 })}
             </div>
 

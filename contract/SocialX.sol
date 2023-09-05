@@ -241,8 +241,10 @@ contract SocialX {
     }
 
     // Function to get user's own posts
-    function getUserPosts() public view returns (Post[] memory) {
-        return userPosts[msg.sender];
+    function getUserPosts(
+        address _userAddress
+    ) public view returns (Post[] memory) {
+        return userPosts[_userAddress];
     }
 
     // Function to get user's saved posts

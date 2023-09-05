@@ -1,3 +1,8 @@
-.Profile img{
+.Profile img {
     width: 7rem;
+}
+
+.Profile .profileBox {
+    border: 2px solid white;
+    color: white;
 }
