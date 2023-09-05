@@ -37,7 +37,7 @@
 .Post .postImage{
     height: 19rem;
     width: 19rem;
-    margin: 1rem 0.75rem;
+    margin: 0.75rem 0.75rem;
     border-radius: 1.25rem;
 }
 
@@ -49,7 +49,7 @@
     height: 18px;
 }
 
-.postBtnContainer{
+.postContainers{
     display: flex;
     justify-content: space-between;
     max-width: 17.875rem;
@@ -61,4 +61,29 @@
     display: flex;
     align-items: center;
     gap: 1.25rem;
+}
+
+.likeCmtCountContainer{
+    margin-top: 0.5rem;
+    justify-content: flex-start;
+    gap: 0.25rem;
+}
+
+.count{
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.countlabel{
+    color: #939394;
+}
+
+.nameNCaption{
+    justify-content: flex-start;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+.textContent{
+    font-size: 10px;
+    color: #939394;
 }

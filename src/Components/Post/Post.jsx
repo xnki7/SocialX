@@ -100,7 +100,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                 </div>
             </Link>
             <div className="footer">
-                <div className='postBtnContainer'>
+                <div className='postContainers'>
                     <div className='likeCommentBtnContainer'>
                         <button className='postBtns' disabled={isLiked} onClick={likePost}>
                             {isLiked ? <img src='Images/Liked.svg' /> : <img src='Images/Like.svg' />}
@@ -113,11 +113,13 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
 
                     <button className='postBtns' disabled={isSaved} onClick={savePost}> {isSaved ? <img src='Images/Saved.svg' /> : <img src='Images/Save.svg' />}</button>
                 </div>
-                <p className="likecount">{likesNumber.toString() + " "}Likes</p>
-
-                <p className="commentcount">{commentsNumber.toString() + " "}Comments</p>
+                <div className='likeCmtCountContainer postContainers'>
+                    <p className="likecount count">{likesNumber.toString() + " "} <span className='countlabel'>Likes</span> </p>
+                    <p>.</p>
+                    <p className="commentcount count">{commentsNumber.toString() + " "} <span className='countlabel'>Comments</span> </p>
+                </div>
             </div>
-            <div className='nameNCaption'>
+            <div className='nameNCaption postContainers'>
                 {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <p>loading..</p>}
                 <p className="textContent">{textContent}</p>
             </div>
