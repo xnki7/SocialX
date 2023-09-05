@@ -69,14 +69,18 @@ const Homepage = ({ contract, accountAddress }) => {
 
     return (
         <div className='Homepage'>
-            <Header/>
+            <div className="header">
+                <Header />
+            </div>
             <Navbar contract={contract} accountAddress={accountAddress} />
             {/* <h2>Homepage</h2> */}
-            {posts && posts.map((post) => (
-                <div key={post.postId}>
-                    {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <p>No metadata available</p>}
-                </div>
-            ))}
+            <div className="posts">
+                {posts && posts.map((post) => (
+                    <div key={post.postId}>
+                        {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <p>No metadata available</p>}
+                    </div>
+                ))}
+            </div>
         </div>
     )
 }

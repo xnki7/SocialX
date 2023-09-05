@@ -1,47 +1,74 @@
 .Post {
     /* border: 2px solid black; */
-    margin: 1rem auto ;
-    width: 328px;
+    margin: 1.5rem auto;
+    width: 50%;
     border-radius: 20px;
     min-height: 32rem;
     background-color: #262629;
     color: white;
 }
 
-.Post .header{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: 0.7rem 0 0 0.7rem;
+@media (max-width: 320px) {
+
+    /* Adjust font size and other styles for phones */
+    .Post {
+        width: 90%;
+    }
 }
 
-.Post .profileImage{
+@media (max-width: 768px) {
+
+    /* Adjust font size and other styles for phones */
+    .Post {
+        width: 90%;
+    }
+}
+
+.Post .Header {
+    display: flex;
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    padding: 0.7rem 0;
+}
+
+.Post .profileImage {
     width: 3rem;
     height: 3rem;
+    margin-left: 1rem;
     border-radius: 50%;
 }
 
-.Post .username{
+.Post .username {
     font-size: 0.875rem;
     font-weight: 600;
 }
 
-.Post .uNameContainer{
-    margin-left: 1rem;
+.Post .uNameContainer {
+    margin-left: 0.5rem;
 }
-.Post .uNameContainer .timestamp{
-    font-size: 0.5rem;
+
+.Post .uNameContainer .timestamp {
+    font-size: 0.65rem;
     color: #939394;
 }
 
-.Post .postImage{
+.Post .content {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.Post .postImage {
     height: 19rem;
-    width: 19rem;
-    margin: 0.75rem 0.75rem;
+    max-width: 19rem;
+    width: auto;
+    /* margin: 0.75rem 0.75rem; */
     border-radius: 1.25rem;
 }
 
-.postBtns{
+.postBtns {
     background: none;
     border: none;
     padding: 0;
@@ -49,41 +76,82 @@
     height: 18px;
 }
 
-.postContainers{
+.postContainers {
     display: flex;
     justify-content: space-between;
-    max-width: 17.875rem;
+    /* max-width: 17.875rem; */
+    width: 90%;
     align-items: center;
     margin: 0 auto;
+    margin-top: 1rem;
 }
 
-.likeCommentBtnContainer{
+.likeCommentBtnContainer {
     display: flex;
     align-items: center;
     gap: 1.25rem;
 }
 
-.likeCmtCountContainer{
+.likeCmtCountContainer {
     margin-top: 0.5rem;
     justify-content: flex-start;
     gap: 0.25rem;
 }
 
-.count{
+.count {
     font-size: 12px;
     font-weight: 500;
 }
 
-.countlabel{
+.countlabel {
     color: #939394;
 }
 
-.nameNCaption{
+.nameNCaption {
     justify-content: flex-start;
     gap: 0.5rem;
     margin-top: 0.75rem;
 }
-.textContent{
+
+.textContent {
     font-size: 10px;
     color: #939394;
+}
+
+/* Add these styles to your Post.css file or a separate CSS file */
+.content {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.postImage {
+    max-width: 100%;
+    height: auto;
+}
+
+.carousel-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.5);
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    z-index: 1;
+    font-size: 20px;
+}
+
+.prev-button {
+    left: 10px;
+}
+
+.next-button {
+    right: 10px;
+}
+
+.Post .footer {
+    width: 100%;
 }

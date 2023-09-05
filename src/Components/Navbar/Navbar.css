@@ -1,7 +1,8 @@
 .Navbar {
     width: 100%;
-    position: sticky;
+    position: fixed;
     top: 92vh;
+    z-index: 20;
 }
 
 .Navbar .subNavbar {
