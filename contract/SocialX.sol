@@ -38,6 +38,7 @@ contract SocialX {
     mapping(uint256 => uint256) postLikes;
     mapping(address => mapping(uint256 => bool)) hasUserLikedPost;
     mapping(uint256 => Comment[]) postComments;
+    mapping(address => mapping(uint256 => bool)) isPostSaved;
 
     // Function to create a user profile
     function createUserProfile(string memory _userProfileCID) public {
@@ -98,7 +99,9 @@ contract SocialX {
 
     // Function to save a post
     function savePost(uint256 _postId) public {
+        require(!isPostSaved[msg.sender][_postId]);
         userSavedPosts[msg.sender].push(idToPost[_postId]);
+        isPostSaved[msg.sender][_postId] = true;
     }
 
     // Function to delete a saved post
@@ -275,5 +278,9 @@ contract SocialX {
 
     function getIsUserFollowing(address _user) public view returns (bool) {
         return isUserFollowing[msg.sender][_user];
+    }
+
+    function getIsPostSaved(uint256 _postId) public view returns (bool) {
+        return isPostSaved[msg.sender][_postId];
     }
 }

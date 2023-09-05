@@ -86,6 +86,7 @@ const Profile = ({ contract, accountAddress }) => {
 
     return (
         <div className='Profile'>
+            <button>Edit Profile</button>
             {profileData && profileData.imageCID ? <img className='navIcons profileIcon' src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" /> : <p>loading..</p>}
             {profileData && profileData.userName ? <p>{profileData.userName}</p> : <p>loading</p>}
             {profileData && profileData.bio ? <p>{profileData.bio}</p> : <p>loading</p>}

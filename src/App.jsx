@@ -12,6 +12,7 @@ import PostDetail from "./Pages/PostDetail/PostDetail"
 import CreateProfile from './Pages/CreateProfile/CreateProfile'
 import CreatePost from './Pages/CreatePost/CreatePost'
 import SearchProfiles from './Pages/SearchProfiles/SearchProfiles'
+import EditProfile from './Pages/EditProfile/EditProfile'
 import { publicProvider } from "wagmi/providers/public";
 import { ethers } from "ethers";
 import { contractAddress, contractABI } from './constant.js'
@@ -117,6 +118,10 @@ function App() {
         <Route
           path='/profile'
           element={<Profile contract={contract} accountAddress={accountAddress} />}
+        />
+        <Route
+          path='/profile/editprofile'
+          element={<EditProfile contract={contract} accountAddress={accountAddress} />}
         />
         <Route
           path='/profile/:postId'

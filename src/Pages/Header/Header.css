@@ -1,23 +1,29 @@
-.headerContainer{
+.headerContainer {
     display: flex;
     justify-content: flex-end;
     background-color: #262629;
     height: 3.8rem;
+    width: 90%;
     align-items: center;
-    position: sticky;
+    position: fixed;
     border-radius: 20px;
-    margin: 0.8125rem;
+    /* margin: 0.8125rem; */
     margin-bottom: 0;
-    padding: 0 1.75rem;
-    top: 15px;
+    /* padding: 0 1.75rem; */
+    top: 1rem;
+    z-index: 20;
 }
 
-.headerContainer .logoImg{
+.headerContainer .logoImg {
     margin: auto;
     width: 6.75rem
 }
 
-.headerContainer button{
+.headerContainer button {
     display: flex;
     align-items: center;
+}
+
+.headerContainer button.postBtns{
+    margin-right: 2rem;
 }
