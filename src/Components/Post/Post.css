@@ -40,3 +40,25 @@
     margin: 1rem 0.75rem;
     border-radius: 1.25rem;
 }
+
+.postBtns{
+    background: none;
+    border: none;
+    padding: 0;
+    width: 19.54px;
+    height: 18px;
+}
+
+.postBtnContainer{
+    display: flex;
+    justify-content: space-between;
+    max-width: 17.875rem;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.likeCommentBtnContainer{
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
