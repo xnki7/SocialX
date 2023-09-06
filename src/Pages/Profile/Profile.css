@@ -5,63 +5,87 @@
 
 /* *************** */
 
-.Profile img {
-    width: 7rem;
-    height: 7rem;
-    object-fit: cover;
-    border-radius: 50%;
+.Profile{
+    background-color: #262629;
+    margin-top: 6.25rem;
+    min-height: calc(100vh - 6.25rem);
+    border-top-left-radius: 1.25rem;
+    border-top-right-radius: 1.25rem;
+    padding: 1.75rem;
 }
 
-.profileBtnContainer {
+.profileImageContainer img{
+    width: 7rem;
+    height: 7rem;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.profileBtnContainer{
     display: flex;
     justify-content: space-between;
     max-width: 20rem;
     margin: 0 auto 0 auto;
 }
 
-.prBtn {
+.prBtn{
     background: none;
     border: none;
 }
 
-.prBtn img {
+.prBtn img{
     height: 2.5rem;
     width: 2.5rem;
     object-fit: contain;
 }
 
-.profileImageContainer {
+.profileImageContainer{
     display: flex;
     justify-content: center;
 }
 
-.nameNBio {
+.nameNBio{
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 0.625rem;
 
 }
 
-.profileUserName {
+.profileUserName{
     font-size: 1.5rem;
     color: white;
     font-weight: 400;
 }
 
-.profileBio {
+.profileBio{
     font-size: 0.75rem;
     color: #939394;
 }
 
-.profilePosts {
+.profilePosts{
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
     margin-top: 1.7rem;
 }
 
-.profilePosts img {
+.profilePosts img{
     border-radius: 1.25rem;
     height: 10rem;
     width: 10rem;
+}
+
+.profileNavigatorContainer{
+    display: flex;
+    justify-content: space-between;
+}
+
+.countNLabelContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    font-size: 1.125rem;
+    margin-top: 1.25rem;
 }
