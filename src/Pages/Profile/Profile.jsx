@@ -220,7 +220,7 @@ const Profile = ({ contract, myAddress }) => {
                 {posts.map((post) => {
                     if (post.metadata && post.metadata.imageCIDs) {
                         return (
-                            <Link to={`/profile/${post.postId}`}>
+                            <Link to={`/homepage/${post.postId}`}>
                                 <img key={post.postId} src={`https://ipfs.io/ipfs/${post.metadata.imageCIDs[0]}`} alt="" />
                             </Link>
                         );
