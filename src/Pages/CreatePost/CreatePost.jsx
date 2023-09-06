@@ -2,9 +2,12 @@ import React from 'react'
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
 import axios from 'axios'
+import Header from '../Header/Header';
+import Navbar from '../../Components/Navbar/Navbar';
+import img from "./imgPlus.svg"
 import "./CreatePost.css"
 
-const CreatePost = ({ contract }) => {
+const CreatePost = ({ contract, accountAddress }) => {
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
     const [textContent, setTextContent] = useState("");
@@ -85,14 +88,26 @@ const CreatePost = ({ contract }) => {
     };
 
     return (
-        <div className='CreatePost'>
-            <form onSubmit={handleFormSubmit}>
-                <h2>Create Post</h2>
-                <input type="text" placeholder='Caption...' value={textContent} onChange={(e) => setTextContent(e.target.value)} />
-                <input type="file" required name="" id="" accept="image/*" multiple onChange={handleImageUpload} />
-                <button type="submit">Create Post</button>
-            </form>
-        </div>
+        <>
+            <div className="header">
+                <Header />
+            </div>
+            <div className='CreatePost'>
+                <form onSubmit={handleFormSubmit}>
+                    <h2>Create Post</h2>
+                    <input id="file" type="file" accept="image/*" onChange={handleImageUpload} required />
+                    <label htmlFor="file">
+                        <img id="inputImg" src={img} alt="" />
+                    </label>
+                    <div className="inputBox">
+                        <p className="inputHead">Caption</p>
+                        <textarea placeholder='Caption...' value={textContent} onChange={(e) => setTextContent(e.target.value)} />
+                    </div>
+                    <button type="submit">Create Post</button>
+                </form>
+                <Navbar contract={contract} accountAddress={accountAddress} />
+            </div>
+        </>
     )
 }
 

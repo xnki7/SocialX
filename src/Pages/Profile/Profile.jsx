@@ -7,7 +7,7 @@ import "./Profile.css"
 import EditBtn from "./EditBtn.svg"
 import ProfileCard from "../../Components/ProfileCard/ProfileCard"
 import Navbar from '../../Components/Navbar/Navbar';
-import Header from "../../Pages/Header/Header"
+import Header from '../../Components/Header/Header';
 
 const Profile = ({ contract, myAddress }) => {
     const { accountAddress } = useParams();
@@ -201,11 +201,11 @@ const Profile = ({ contract, myAddress }) => {
                 <Header />
             </div> */}
             <Header />
-            <Navbar contract={contract} accountAddress={accountAddress} />
+            <Navbar contract={contract} accountAddress={myAddress} />
             <div className='Profile'>
                 <div className='profileBtnContainer'>
                     {
-                        (myAddress === accountAddress) ? <button className='prBtn'><img src={EditBtn} alt="edit" /></button> : <></>
+                        (myAddress === accountAddress) ? <Link to="/profile/editprofile" style={{ textDecoration: "none", color: "white" }}><button className='prBtn'><img src={EditBtn} alt="edit" /></button></Link> : <></>
                     }
                     {(myAddress !== accountAddress) ? (
                         !isFollowing ? (

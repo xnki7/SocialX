@@ -1,0 +1,61 @@
+.header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.CreatePost {
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.CreatePost form {
+    padding: 2rem 2.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    height: 65%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.CreatePost form button {
+    border: none;
+    border-radius: 3rem;
+    background: #0466C8;
+    color: white;
+    height: 2.5rem;
+    width: 10rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.CreatePost h2 {
+    color: white;
+}
+
+.CreatePost textarea {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid #4E4E50;
+    border-radius: 8px;
+    color: white;
+    padding: 0.5rem;
+}
+
+.CreatePost textarea:focus {
+    outline: none;
+}
+
+.CreatePost p.inputHead {
+    color: #949494;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+}

@@ -105,7 +105,7 @@ function App() {
         />
         <Route
           path='/createpost'
-          element={<CreatePost contract={contract} />}
+          element={<CreatePost contract={contract} accountAddress={accountAddress} />}
         />
         <Route
           path='/homepage'

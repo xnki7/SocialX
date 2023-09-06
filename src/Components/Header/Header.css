@@ -1,0 +1,32 @@
+.headerContainer {
+    display: flex;
+    justify-content: flex-end;
+    background-color: #262629;
+    height: 3.8rem;
+    width: 90%;
+    align-items: center;
+    position: fixed;
+    border-radius: 20px;
+    background-color: #1A1A1D;
+    border: 2px solid #4E4E50;
+    /* margin: 0.8125rem; */
+    margin-bottom: 0;
+    /* padding: 0 1.75rem; */
+    top: 1rem;
+    z-index: 20;
+}
+
+.headerContainer .logoImg {
+    margin: auto;
+    width: 10rem;
+    padding-left: 3.5rem;
+}
+
+.headerContainer button {
+    display: flex;
+    align-items: center;
+}
+
+.headerContainer button.postBtns {
+    margin-right: 2rem;
+}
