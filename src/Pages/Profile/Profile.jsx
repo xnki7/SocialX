@@ -17,6 +17,7 @@ const Profile = ({ contract, myAddress }) => {
     const [followings, setFollowings] = useState([]);
     const [followers, setFollowers] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [display, setDisplay] = useState({ post: true, follower: false, following: false })
 
     const fetchProfileMetadata1 = async (postURI) => {
         try {
@@ -195,19 +196,32 @@ const Profile = ({ contract, myAddress }) => {
         }
     }, [contract, accountAddress])
 
+    const displayPosts = ()=>{
+        setDisplay(()=>{
+            return {post:true, follower:false, following:false}
+        })
+    }
+    const displayFollowings = ()=>{
+        setDisplay(()=>{
+            return {post:false, follower:false, following:true}
+        })
+    }
+    const displayFollowers = ()=>{
+        setDisplay(()=>{
+            return {post:false, follower:true, following:false}
+        })
+    }
+
     return (
         <>
-            {/* <div className="header">
-                <Header />
-            </div> */}
             <div className='header'>
-                <Header /> 
+                <Header />
             </div>
             <Navbar contract={contract} accountAddress={accountAddress} />
             <div className='Profile'>
                 <div className='profileBtnContainer'>
                     {
-                        (myAddress === accountAddress) ? <button className='prBtn'><img src={EditBtn} alt="edit" /></button> : <></>
+                        (myAddress === accountAddress) ? <button className='editBtn'><img src={EditBtn} alt="edit" /></button> : <></>
                     }
                     {(myAddress !== accountAddress) ? (
                         !isFollowing ? (
@@ -229,60 +243,81 @@ const Profile = ({ contract, myAddress }) => {
                 </div>
 
                 <div className='profileNavigatorContainer'>
-                    <p className='countNLabelContainer'>
+                    <p 
+                    onClick={displayPosts}
+                    className='countNLabelContainer'>
                         <span className='prcount'>{posts.length}</span>
-                        <span className='prlabel'>Posts</span>
+                        <span
+                            className='prlabel'
+                            style={display.post ? { backgroundColor: '#4E4E50' } : {}}
+                        >Posts</span>
                     </p>
-                    <p className='countNLabelContainer'>
+                    <p 
+                    onClick={displayFollowers}
+                    className='countNLabelContainer'>
                         <span className='prcount'>{followers.length}</span>
-                        <span className='prlabel'>Followers</span>
+                        <span
+                            className='prlabel'
+                            style={display.follower ? { backgroundColor: '#4E4E50' } : {}}
+                        >Followers</span>
                     </p>
-                    <p className='countNLabelContainer'>
+                    <p 
+                    onClick={displayFollowings}
+                    className='countNLabelContainer'>
                         <span className='prcount'>{followings.length}</span>
-                        <span className='prlabel'>Following</span>
+                        <span
+                            className='prlabel'
+                            style={display.following ? { backgroundColor: '#4E4E50' } : {}}
+                        >Following</span>
                     </p>
                 </div>
 
-                <div className="profilePosts">
-                    {posts.map((post) => {
-                        if (post.metadata && post.metadata.imageCIDs) {
-                            return (
-                                // eslint-disable-next-line react/jsx-key
-                                <Link to={`/homepage/${post.postId}`}>
-                                    <img className='postImages' key={post.postId} src={`https://ipfs.io/ipfs/${post.metadata.imageCIDs[0]}`} alt="" />
+                {
+                    display.post ? <div className="profilePosts">
+                        {posts.map((post) => {
+                            if (post.metadata && post.metadata.imageCIDs) {
+                                return (
+                                    // eslint-disable-next-line react/jsx-key
+                                    <Link to={`/homepage/${post.postId}`}>
+                                        <img className='postImages' key={post.postId} src={`https://ipfs.io/ipfs/${post.metadata.imageCIDs[0]}`} alt="" />
+                                    </Link>
+                                );
+                            } else {
+                                return null; // Render nothing if metadata or imageCIDs are missing
+                            }
+                        })}
+                    </div>:<></>
+                }
+
+                {
+                    display.following ? <div className="followings followContainer">
+                        {/* <h1>Followings</h1> */}
+                        {followings && followings.map((follows) => {
+                            return <>
+                                <Link to={`/profile/${follows.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
+                                    <div className="profileBox">
+                                        {follows.metadata && <ProfileCard address={follows.userAddress} username={follows.metadata.userName} image={`https://ipfs.io/ipfs/${follows.metadata.imageCID}`} />}
+                                    </div>
+                                </Link >
+                            </>
+                        })}
+                    </div>:<></>
+                }
+
+                {
+                    display.follower ? <div className="followers followContainer">
+                        {/* <h1>Followers</h1> */}
+                        {followers && followers.map((follower) => {
+                            return <>
+                                <Link to={`/profile/${follower.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
+                                    <div className="profileBox">
+                                        {follower.metadata && <ProfileCard address={follower.userAddress} username={follower.metadata.userName} image={`https://ipfs.io/ipfs/${follower.metadata.imageCID}`} />}
+                                    </div>
                                 </Link>
-                            );
-                        } else {
-                            return null; // Render nothing if metadata or imageCIDs are missing
-                        }
-                    })}
-                </div>
-
-                <div className="followings">
-                    <h1>Followings</h1>
-                    {followings && followings.map((follows) => {
-                        return <>
-                            <Link to={`/profile/${follows.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
-                                <div className="profileBox">
-                                    {follows.metadata && <ProfileCard address={follows.userAddress} username={follows.metadata.userName} image={`https://ipfs.io/ipfs/${follows.metadata.imageCID}`} />}
-                                </div>
-                            </Link >
-                        </>
-                    })}
-                </div>
-
-                <div className="followers">
-                    <h1>Followers</h1>
-                    {followers && followers.map((follower) => {
-                        return <>
-                            <Link to={`/profile/${follower.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
-                                <div className="profileBox">
-                                    {follower.metadata && <ProfileCard address={follower.userAddress} username={follower.metadata.userName} image={`https://ipfs.io/ipfs/${follower.metadata.imageCID}`} />}
-                                </div>
-                            </Link>
-                        </>
-                    })}
-                </div>
+                            </>
+                        })}
+                    </div>:<></>
+                }
 
             </div>
         </>

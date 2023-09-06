@@ -1,8 +1,10 @@
 .ProfileCard {
     width: 100%;
+    /* border: 2px solid #262629; */
 }
 
 .SubProfileCard {
+    border: 1px solid rgba(255, 255, 255, 0.5);
     margin-left: 7.5%;
     width: 85%;
     height: 5rem;
@@ -19,6 +21,7 @@
     height: 3rem;
     border-radius: 50%;
     margin-left: 1rem;
+    object-fit: cover;
 }
 
 .ProfileCard .userDetails {
