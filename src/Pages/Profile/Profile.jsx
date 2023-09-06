@@ -200,7 +200,9 @@ const Profile = ({ contract, myAddress }) => {
             {/* <div className="header">
                 <Header />
             </div> */}
-            <Header />
+            <div className='header'>
+                <Header /> 
+            </div>
             <Navbar contract={contract} accountAddress={accountAddress} />
             <div className='Profile'>
                 <div className='profileBtnContainer'>
