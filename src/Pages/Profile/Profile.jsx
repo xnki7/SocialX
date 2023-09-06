@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import "./Profile.css"
+import
 
 const Profile = ({ contract, myAddress }) => {
     const { accountAddress } = useParams();
@@ -193,18 +194,21 @@ const Profile = ({ contract, myAddress }) => {
 
     return (
         <div className='Profile'>
-            {
-                (myAddress === accountAddress) ? <button>Edit Profile</button> : <></>
-            }
-            {(myAddress !== accountAddress) ? (
-                !isFollowing ? (
-                    <button onClick={followUser}>Follow</button>
+            <div className='profileBtnContainer'>
+                {
+                    (myAddress === accountAddress) ? <button className='prBtn'><img src="Images/EditBtn.svg" alt="edit" /></button> : <></>
+                }
+                {(myAddress !== accountAddress) ? (
+                    !isFollowing ? (
+                        <button className='prBtn followBtn' onClick={followUser}>Follow</button>
+                    ) : (
+                        <button className='prBtn unfollowBtn' onClick={unfollowUser}>Unfollow</button>
+                    )
                 ) : (
-                    <button onClick={unfollowUser}>Unfollow</button>
-                )
-            ) : (
-                <></>
-            )}
+                    <></>
+                )}
+            </div>
+
             {profileData && profileData.imageCID ? <img className='navIcons profileIcon' src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" /> : <p>loading..</p>}
             {profileData && profileData.userName ? <p>{profileData.userName}</p> : <p>loading</p>}
             {profileData && profileData.bio ? <p>{profileData.bio}</p> : <p>loading</p>}

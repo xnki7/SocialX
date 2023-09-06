@@ -6,3 +6,66 @@
     border: 2px solid white;
     color: white;
 }
+
+/* *************** */
+
+.Profile img{
+    width: 7rem;
+    height: 7rem;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.profileBtnContainer{
+    display: flex;
+    justify-content: space-between;
+    max-width: 20rem;
+    margin: 0 auto 0 auto;
+}
+
+.prBtn{
+    background: none;
+    border: none;
+}
+
+.prBtn img{
+    height: 2.5rem;
+    width: 2.5rem;
+    object-fit: contain;
+}
+
+.profileImageContainer{
+    display: flex;
+    justify-content: center;
+}
+
+.nameNBio{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.profileUserName{
+    font-size: 1.5rem;
+    color: white;
+    font-weight: 400;
+}
+
+.profileBio{
+    font-size: 0.75rem;
+    color: #939394;
+}
+
+.profilePosts{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.7rem;
+}
+
+.profilePosts img{
+    border-radius: 1.25rem;
+    height: 10rem;
+    width: 10rem;
+}
