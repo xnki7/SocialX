@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import axios from 'axios'
 import "./CreatePost.css"
 
 const CreatePost = ({ contract }) => {
+    const navigate = useNavigate();
     const [images, setImages] = useState([]);
     const [textContent, setTextContent] = useState("");
     const [loading, setLoading] = useState(false);
@@ -71,6 +73,7 @@ const CreatePost = ({ contract }) => {
             console.log(postUploadResponse.data.IpfsHash);
             const tx = await contract.createPost(postUploadResponse.data.IpfsHash);
             await tx.wait();
+            navigate('/homepage')
 
             setTextContent('');
             setImages([]);
