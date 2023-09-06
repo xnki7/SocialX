@@ -125,7 +125,7 @@ function App() {
         />
         <Route
           path='/searchprofiles'
-          element={<SearchProfiles contract={contract} />}
+          element={<SearchProfiles contract={contract} accountAddress={accountAddress} />}
         />
         <Route
           path='/savedposts'

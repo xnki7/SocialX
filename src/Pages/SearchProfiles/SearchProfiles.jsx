@@ -1,9 +1,12 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
 import axios from 'axios'
+import Header from "../Header/Header"
+import Navbar from "../../Components/Navbar/Navbar"
+import ProfileCard from '../../Components/ProfileCard/ProfileCard'
 import "./SearchProfiles.css"
 
-const SearchProfiles = ({ contract }) => {
+const SearchProfiles = ({ contract, accountAddress }) => {
     const [profiles, setProfiles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const getAllProfiles = async () => {
@@ -56,16 +59,18 @@ const SearchProfiles = ({ contract }) => {
 
     return (
         <div className='SearchProfiles'>
+            <div className="header">
+                <Header />
+            </div>
+            <Navbar contract={contract} accountAddress={accountAddress} />
             <form>
-                <input type="text" />
-                <button type="submit">Search</button>
+                <input type="text" placeholder='Search people...' />
+                {/* <button type="submit">Search</button> */}
             </form>
             <div className="profiles">
                 {profiles.map((profile) => {
                     return profile.metadata && <>
-                        <p>{profile.metadata.userName}</p>
-                        <p>{profile.userAddress}</p>
-                        <img src={`https://ipfs.io/ipfs/${profile.metadata.imageCID}`} alt="" />
+                        <ProfileCard address={profile.userAddress} username={profile.metadata.userName} image={`https://ipfs.io/ipfs/${profile.metadata.imageCID}`} />
                     </>
                 })}
             </div>

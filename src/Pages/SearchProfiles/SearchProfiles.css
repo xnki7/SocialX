@@ -1,0 +1,41 @@
+.SearchProfiles .header {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.SearchProfiles {
+    /* background-color: #262629 */
+    padding-top: 6rem;
+}
+
+.SearchProfiles input {
+    width: 85%;
+    margin-left: 7.5%;
+    margin-bottom: 2rem;
+    height: 2.5rem;
+    background-color: #4E4E50;
+    border: none;
+    border-radius: 18px;
+    color: white;
+    font-size: 0.9rem;
+    padding: 0 0.75rem;
+}
+
+.SearchProfiles input:focus {
+    outline: none;
+}
+
+.SearchProfiles input::placeholder {
+    color: white;
+    font-size: 0.85rem;
+}
+
+.SearchProfiles .profiles {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

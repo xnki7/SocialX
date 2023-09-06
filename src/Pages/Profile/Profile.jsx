@@ -3,8 +3,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import ProfileCard from '../../Components/ProfileCard/ProfileCard';
 import "./Profile.css"
-import
 
 const Profile = ({ contract, myAddress }) => {
     const { accountAddress } = useParams();
@@ -196,7 +196,7 @@ const Profile = ({ contract, myAddress }) => {
         <div className='Profile'>
             <div className='profileBtnContainer'>
                 {
-                    (myAddress === accountAddress) ? <button className='prBtn'><img src="Images/EditBtn.svg" alt="edit" /></button> : <></>
+                    (myAddress === accountAddress) ? <Link to={`/profile/editprofile`}><button className='prBtn'><img src="Images/EditBtn.svg" alt="edit" /></button></Link> : <></>
                 }
                 {(myAddress !== accountAddress) ? (
                     !isFollowing ? (
@@ -235,11 +235,7 @@ const Profile = ({ contract, myAddress }) => {
                 {followings && followings.map((follows) => {
                     return <>
                         <Link to={`/profile/${follows.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
-                            <div className="profileBox">
-                                {follows.metadata && <p>{follows.metadata.userName}</p>}
-                                {follows.metadata && <img src={`https://ipfs.io/ipfs/${follows.metadata.imageCID}`} alt="" />}
-                                <p>{follows.userAddress}</p>
-                            </div>
+                            {follows.metadata && <ProfileCard address={follows.userAddress} username={follows.metadata.userName} image={`https://ipfs.io/ipfs/${follows.metadata.imageCID}`} />}
                         </Link >
                     </>
                 })}
@@ -250,11 +246,7 @@ const Profile = ({ contract, myAddress }) => {
                 {followers && followers.map((follower) => {
                     return <>
                         <Link to={`/profile/${follower.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
-                            <div className="profileBox">
-                                {follower.metadata && <p>{follower.metadata.userName}</p>}
-                                {follower.metadata && <img src={`https://ipfs.io/ipfs/${follower.metadata.imageCID}`} alt="" />}
-                                <p>{follower.userAddress}</p>
-                            </div>
+                            {follower.metadata && <ProfileCard address={follower.userAddress} username={follower.metadata.userName} image={`https://ipfs.io/ipfs/${follower.metadata.imageCID}`} />}
                         </Link>
                     </>
                 })}

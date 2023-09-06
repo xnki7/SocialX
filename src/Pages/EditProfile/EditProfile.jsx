@@ -1,13 +1,15 @@
 import React from 'react'
 import { useState } from 'react'
 import axios from 'axios'
+import img from "../CreateProfile/createPic.png"
+import logo from "../ConnectWallet/SocialX.png"
 import "./EditProfile.css"
 
 const EditProfile = ({ contract, accountAddress }) => {
     const [userName, setUserName] = useState("");
+    const [bio, setBio] = useState("Hey I am on SocialX!");
     const [image, setImage] = useState(null);
     const [loading, setLoading] = useState(false);
-    const bio = "Hey I am on SocialX!";
 
     const handleImageUpload = async (event) => {
         const file = event.target.files[0];
@@ -76,8 +78,8 @@ const EditProfile = ({ contract, accountAddress }) => {
         <div className='EditProfile'>
             <img src={logo} id='logo' alt="" />
             <form onSubmit={handleFormSubmit}>
-                <p className="heading">Create Profile</p>
-                <input id="file" type="file" accept="image/*" onChange={handleImageUpload} />
+                <p className="heading">Edit Profile</p>
+                <input id="file" type="file" accept="image/*" onChange={handleImageUpload} required />
                 <label htmlFor="file">
                     <img id="inputImg" src={img} alt="" />
                 </label>
@@ -85,7 +87,11 @@ const EditProfile = ({ contract, accountAddress }) => {
                     <p className="inputHead">Username*</p>
                     <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} required />
                 </div>
-                <button type="submit">Create Profile</button>
+                <div className="inputBox">
+                    <p className="inputHead">Bio</p>
+                    <textarea name="" id="" value={bio} onChange={(e) => setBio(e.target.value)}></textarea>
+                </div>
+                <button type="submit">Update Profile</button>
             </form>
             <p className="footer">Made Just for You, Filled with ❤️</p></div>
     )

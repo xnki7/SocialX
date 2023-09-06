@@ -1,0 +1,96 @@
+.EditProfile {
+    height: 100dvh;
+    width: 100%;
+    background-color: #1A1A1D;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+#file {
+    display: none;
+}
+
+.EditProfile p {
+    margin: 0;
+    color: white;
+}
+
+.EditProfile p.footer {
+    margin-bottom: 2rem;
+}
+
+.EditProfile img#logo {
+    margin-top: 2rem;
+}
+
+.EditProfile img#inputImg {
+    cursor: pointer;
+}
+
+.EditProfile form {
+    padding: 2rem 2.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 1rem;
+    height: 70%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.EditProfile form p.heading {
+    font-size: 2rem;
+    font-weight: 900;
+}
+
+.EditProfile form button {
+    border: none;
+    border-radius: 3rem;
+    background: #0466C8;
+    color: white;
+    height: 2.5rem;
+    width: 10rem;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.EditProfile .inputBox {
+    width: 100%;
+}
+
+.EditProfile .inputBox input {
+    width: 14rem;
+    border: 1px solid #4E4E50;
+    border-radius: 8px;
+    background-color: transparent;
+    height: 1.75rem;
+    color: white;
+    padding: 0 0.75rem;
+}
+
+.EditProfile .inputBox input:focus {
+    outline: none;
+}
+
+.EditProfile p.inputHead {
+    color: #949494;
+    font-weight: 700;
+    font-size: 0.95rem;
+    margin-bottom: 0.25rem;
+}
+
+.EditProfile textarea {
+    width: 100%;
+    background-color: transparent;
+    border: 1px solid #4E4E50;
+    border-radius: 8px;
+    color: white;
+    padding: 0.5rem;
+}
+
+.EditProfile textarea:focus{
+    outline: none;
+}
