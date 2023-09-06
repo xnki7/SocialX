@@ -196,19 +196,19 @@ const Profile = ({ contract, myAddress }) => {
         }
     }, [contract, accountAddress])
 
-    const displayPosts = ()=>{
-        setDisplay(()=>{
-            return {post:true, follower:false, following:false}
+    const displayPosts = () => {
+        setDisplay(() => {
+            return { post: true, follower: false, following: false }
         })
     }
-    const displayFollowings = ()=>{
-        setDisplay(()=>{
-            return {post:false, follower:false, following:true}
+    const displayFollowings = () => {
+        setDisplay(() => {
+            return { post: false, follower: false, following: true }
         })
     }
-    const displayFollowers = ()=>{
-        setDisplay(()=>{
-            return {post:false, follower:true, following:false}
+    const displayFollowers = () => {
+        setDisplay(() => {
+            return { post: false, follower: true, following: false }
         })
     }
 
@@ -216,13 +216,12 @@ const Profile = ({ contract, myAddress }) => {
         <>
             <div className='header'>
                 <Header />
-            </div> */}
-            <Header />
-            <Navbar contract={contract} accountAddress={accountAddress} />
+            </div>
+            <Navbar contract={contract} accountAddress={myAddress} />
             <div className='Profile'>
                 <div className='profileBtnContainer'>
                     {
-                        (myAddress === accountAddress) ? <button className='prBtn'><img src={EditBtn} alt="edit" /></button> : <></>
+                        (myAddress === accountAddress) ? <Link to="/profile/editprofile"><button className='prBtn editBtn'><img src={EditBtn} alt="edit" /></button></Link> : <></>
                     }
                     {(myAddress !== accountAddress) ? (
                         !isFollowing ? (
@@ -244,27 +243,27 @@ const Profile = ({ contract, myAddress }) => {
                 </div>
 
                 <div className='profileNavigatorContainer'>
-                    <p 
-                    onClick={displayPosts}
-                    className='countNLabelContainer'>
+                    <p
+                        onClick={displayPosts}
+                        className='countNLabelContainer'>
                         <span className='prcount'>{posts.length}</span>
                         <span
                             className='prlabel'
                             style={display.post ? { backgroundColor: '#4E4E50' } : {}}
                         >Posts</span>
                     </p>
-                    <p 
-                    onClick={displayFollowers}
-                    className='countNLabelContainer'>
+                    <p
+                        onClick={displayFollowers}
+                        className='countNLabelContainer'>
                         <span className='prcount'>{followers.length}</span>
                         <span
                             className='prlabel'
                             style={display.follower ? { backgroundColor: '#4E4E50' } : {}}
                         >Followers</span>
                     </p>
-                    <p 
-                    onClick={displayFollowings}
-                    className='countNLabelContainer'>
+                    <p
+                        onClick={displayFollowings}
+                        className='countNLabelContainer'>
                         <span className='prcount'>{followings.length}</span>
                         <span
                             className='prlabel'
@@ -287,7 +286,7 @@ const Profile = ({ contract, myAddress }) => {
                                 return null; // Render nothing if metadata or imageCIDs are missing
                             }
                         })}
-                    </div>:<></>
+                    </div> : <></>
                 }
 
                 {
@@ -302,7 +301,7 @@ const Profile = ({ contract, myAddress }) => {
                                 </Link >
                             </>
                         })}
-                    </div>:<></>
+                    </div> : <></>
                 }
 
                 {
@@ -317,7 +316,7 @@ const Profile = ({ contract, myAddress }) => {
                                 </Link>
                             </>
                         })}
-                    </div>:<></>
+                    </div> : <></>
                 }
 
             </div>

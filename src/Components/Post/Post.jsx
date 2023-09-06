@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import like from "./Images/Like.svg";
+import liked from "./Images/Liked.svg";
+import save from "./Images/Save.svg";
+import saved from "./Images/Saved.svg";
+import comment from "./Images/Comment.svg";
 import "./Post.css";
 
 const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs }) => {
@@ -141,17 +146,17 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                 <div className='postContainers'>
                     <div className='likeCommentBtnContainer'>
                         <button className='postBtns' disabled={isLiked} onClick={likePost}>
-                            {isLiked ? <img src='Images/Liked.svg' /> : <img src='Images/Like.svg' />}
+                            {isLiked ? <img src={liked} /> : <img src={like} />}
                         </button>
 
                         <button className="postBtns">
                             <Link to={`/homepage/${postId}`}>
-                                <img src="Images/Comment.svg" alt="" />
+                                <img src={comment} alt="" />
                             </Link>
                         </button>
                     </div>
 
-                    <button className='postBtns' disabled={isSaved} onClick={savePost}> {isSaved ? <img src='Images/Saved.svg' /> : <img src='Images/Save.svg' />}</button>
+                    <button className='postBtns' disabled={isSaved} onClick={savePost}> {isSaved ? <img src={saved} /> : <img src={save} />}</button>
                 </div>
                 <div className='likeCmtCountContainer postContainers'>
                     <p className="likecount count">{likesNumber.toString() + " "} <span className='countlabel'>Likes</span> </p>
