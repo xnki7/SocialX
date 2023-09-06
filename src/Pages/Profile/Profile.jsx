@@ -5,8 +5,9 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import "./Profile.css"
 import EditBtn from "./EditBtn.svg"
+import ProfileCard from "../../Components/ProfileCard/ProfileCard"
 import Navbar from '../../Components/Navbar/Navbar';
-import Header from '../Header/Header';
+import Header from "../../Pages/Header/Header"
 
 const Profile = ({ contract, myAddress }) => {
     const { accountAddress } = useParams();
@@ -196,9 +197,10 @@ const Profile = ({ contract, myAddress }) => {
 
     return (
         <>
-            <div className="header">
+            {/* <div className="header">
                 <Header />
-            </div>
+            </div> */}
+            <Header />
             <Navbar contract={contract} accountAddress={accountAddress} />
             <div className='Profile'>
                 <div className='profileBtnContainer'>
@@ -225,17 +227,17 @@ const Profile = ({ contract, myAddress }) => {
                 </div>
 
                 <div className='profileNavigatorContainer'>
-                    <p className='countNLabelContainer'> 
-                        <span className='prcount'>{4}</span> 
-                        <span className='prlabel'>Posts</span> 
+                    <p className='countNLabelContainer'>
+                        <span className='prcount'>{posts.length}</span>
+                        <span className='prlabel'>Posts</span>
                     </p>
                     <p className='countNLabelContainer'>
-                        <span className='prcount'>{followers.length}</span> 
-                        <span className='prlabel'>Followers</span> 
+                        <span className='prcount'>{followers.length}</span>
+                        <span className='prlabel'>Followers</span>
                     </p>
-                    <p className='countNLabelContainer'> 
-                        <span className='prcount'>{followings.length}</span> 
-                        <span className='prlabel'>Following</span> 
+                    <p className='countNLabelContainer'>
+                        <span className='prcount'>{followings.length}</span>
+                        <span className='prlabel'>Following</span>
                     </p>
                 </div>
 
@@ -260,9 +262,7 @@ const Profile = ({ contract, myAddress }) => {
                         return <>
                             <Link to={`/profile/${follows.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
                                 <div className="profileBox">
-                                    {follows.metadata && <p>{follows.metadata.userName}</p>}
-                                    {follows.metadata && <img src={`https://ipfs.io/ipfs/${follows.metadata.imageCID}`} alt="" />}
-                                    <p>{follows.userAddress}</p>
+                                    {follows.metadata && <ProfileCard address={follows.userAddress} username={follows.metadata.userName} image={`https://ipfs.io/ipfs/${follows.metadata.imageCID}`} />}
                                 </div>
                             </Link >
                         </>
@@ -275,9 +275,7 @@ const Profile = ({ contract, myAddress }) => {
                         return <>
                             <Link to={`/profile/${follower.userAddress}`} style={{ textDecoration: "none", color: "white" }}>
                                 <div className="profileBox">
-                                    {follower.metadata && <p>{follower.metadata.userName}</p>}
-                                    {follower.metadata && <img src={`https://ipfs.io/ipfs/${follower.metadata.imageCID}`} alt="" />}
-                                    <p>{follower.userAddress}</p>
+                                    {follower.metadata && <ProfileCard address={follower.userAddress} username={follower.metadata.userName} image={`https://ipfs.io/ipfs/${follower.metadata.imageCID}`} />}
                                 </div>
                             </Link>
                         </>
