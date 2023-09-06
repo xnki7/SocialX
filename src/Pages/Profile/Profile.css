@@ -23,8 +23,8 @@
 
 .profileBtnContainer{
     display: flex;
-    justify-content: space-between;
-    max-width: 20rem;
+    justify-content: flex-end;
+    max-width: 50rem;
     margin: 0 auto 0 auto;
 }
 
@@ -65,20 +65,26 @@
 
 .profilePosts{
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     gap: 0.5rem;
+    margin: auto;
     margin-top: 1.7rem;
+    max-width: 50rem;
 }
 
 .profilePosts img{
     border-radius: 1.25rem;
     height: 10rem;
     width: 10rem;
+    object-fit: cover;
 }
 
 .profileNavigatorContainer{
     display: flex;
     justify-content: space-between;
+    max-width: 50rem;
+    margin: auto;
 }
 
 .countNLabelContainer{
@@ -88,4 +94,37 @@
     color: white;
     font-size: 1.125rem;
     margin-top: 1.25rem;
+    cursor: pointer;
+}
+
+.prBtn{
+    padding: 0.75rem 1.5rem;
+    background-color: #0466C8;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 2rem;
+    cursor: pointer;
+}
+.editBtn{
+    border-radius: 2rem;
+    cursor: pointer;
+    background: none;
+    border: none;
+}
+.unfollowBtn{
+    color: #0466C8;
+    background-color: white;
+}
+
+.prlabel{
+    padding: 0 1rem;
+    border-radius: 1rem;
+}
+
+.followContainer{
+    max-width: 50rem;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
 }
