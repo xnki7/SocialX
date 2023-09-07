@@ -27,20 +27,20 @@
 
 @media (max-width:320px) {
     .postComment input {
-        width: 50rem;
+        /* width: 50rem; */
     }
 }
 
 @media (min-width:768px) {
     .postComment input {
-        width: 43rem;
+        /* width: 43rem; */
     }
 }
 
 .postComment input {
     font-family: poppins, sans-serif;
-    /* width: 50%; */
-    min-width: 20rem;
+    width: 50%;
+    /* min-width: 20rem; */
     height: 2.5rem;
     border-radius: 2rem;
     border: none;
@@ -90,7 +90,7 @@
         width: 90%;
     }
 
-    input {
+    .postComment input {
         width: 90%;
     }
 }

@@ -1,6 +1,7 @@
 import React from 'react'
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Post from '../../Components/Post/Post';
 import "./PostDetail.css"
@@ -54,9 +55,9 @@ const PostDetail = ({ contract, accountAddress }) => {
                 commentData,
                 {
                     headers: {
-                        pinata_api_key: "4c06043fd7ebff08f27b",
+                        pinata_api_key: "b3909c367f38816509ea",
                         pinata_secret_api_key:
-                            "ec4cfdc1fce8125c18ffe9f8dbbdb583c0212e7ce88cefc8b47a1620ee44a7b4",
+                            "d7e034abe6d3da97a2267aa7065ab20d513f8dc0e1015cdd7c9ed91c99088231",
                     },
                 }
             );
@@ -145,21 +146,25 @@ const PostDetail = ({ contract, accountAddress }) => {
                     </svg>
                     <div className="overlay"></div>
                 </div>) : (<div className='mainCommentContent'>
-                    {post && postData ? <Post postId={postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={postData.textContent} postPicCIDs={postData.imageCIDs} /> : <p>loading...</p>}
+                    {post && postData ? <Post postId={postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={postData.textContent} postPicCIDs={postData.imageCIDs} /> : <></>}
                     <div className="comments">
                         {comments.map((comment) => {
                             return comment.profileMetadata && comment.commentMetadata && <div className='commentBox'>
                                 <div className='profileDataContainer'>
-                                    <img src={`https://ipfs.io/ipfs/${comment.profileMetadata.imageCID}`} alt="" />
+                                    <Link to={`/profile/${comment.commentOwner}`} style={{ textDecoration: "none" }}>
+                                        <img src={`https://ipfs.io/ipfs/${comment.profileMetadata.imageCID}`} alt="" />
+                                    </Link>
                                     <div className='profileDataNTimeContainer'>
-                                        <p className='commentUsername'>{comment.profileMetadata.userName}</p>
+                                        <Link to={`/profile/${comment.commentOwner}`} style={{ textDecoration: "none" }}>
+                                            <p className='commentUsername'>{comment.profileMetadata.userName}</p>
+                                        </Link>
                                         <p className='commentAddress'>{comment.commentOwner.slice(0, 6) + "..." + comment.commentOwner.slice(38, 42)}</p>
-
                                     </div>
                                     <p className='commentDate'>{formatDate(comment.commentTimestamp)}</p>
                                 </div>
                                 <p className='commentData'>{comment.commentMetadata.comment}</p>
                             </div>
+
                         })}
                     </div>
                     {/* Comment Section */}

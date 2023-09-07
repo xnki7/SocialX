@@ -71,9 +71,9 @@ const EditProfile = ({ contract, accountAddress }) => {
                     formData,
                     {
                         headers: {
-                            pinata_api_key: "4c06043fd7ebff08f27b",
+                            pinata_api_key: "b3909c367f38816509ea",
                             pinata_secret_api_key:
-                                "ec4cfdc1fce8125c18ffe9f8dbbdb583c0212e7ce88cefc8b47a1620ee44a7b4",
+                                "d7e034abe6d3da97a2267aa7065ab20d513f8dc0e1015cdd7c9ed91c99088231",
                         },
                     }
                 );
@@ -92,9 +92,9 @@ const EditProfile = ({ contract, accountAddress }) => {
                 profileData,
                 {
                     headers: {
-                        pinata_api_key: "4c06043fd7ebff08f27b",
+                        pinata_api_key: "b3909c367f38816509ea",
                         pinata_secret_api_key:
-                            "ec4cfdc1fce8125c18ffe9f8dbbdb583c0212e7ce88cefc8b47a1620ee44a7b4",
+                            "d7e034abe6d3da97a2267aa7065ab20d513f8dc0e1015cdd7c9ed91c99088231",
                     },
                 }
             );
