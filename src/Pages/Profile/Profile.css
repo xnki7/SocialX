@@ -5,7 +5,7 @@
 
 /* *************** */
 
-.Profile{
+.Profile {
     background-color: #262629;
     margin-top: 6.25rem;
     min-height: calc(100vh - 6.25rem);
@@ -15,37 +15,37 @@
     padding-bottom: 6rem;
 }
 
-.profileImageContainer img{
+.profileImageContainer img {
     width: 7rem;
     height: 7rem;
     border-radius: 50%;
     object-fit: cover;
 }
 
-.profileBtnContainer{
+.profileBtnContainer {
     display: flex;
     justify-content: flex-end;
     max-width: 50rem;
     margin: 0 auto 0 auto;
 }
 
-.prBtn{
+.prBtn {
     background: none;
     border: none;
 }
 
-.prBtn img{
+.prBtn img {
     height: 2.5rem;
     width: 2.5rem;
     object-fit: contain;
 }
 
-.profileImageContainer{
+.profileImageContainer {
     display: flex;
     justify-content: center;
 }
 
-.nameNBio{
+.nameNBio {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -53,18 +53,18 @@
 
 }
 
-.profileUserName{
+.profileUserName {
     font-size: 1.5rem;
     color: white;
     font-weight: 400;
 }
 
-.profileBio{
+.profileBio {
     font-size: 0.75rem;
     color: #939394;
 }
 
-.profilePosts{
+.profilePosts {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -74,21 +74,21 @@
     max-width: 50rem;
 }
 
-.profilePosts img{
+.profilePosts img {
     border-radius: 1.25rem;
     height: 10rem;
     width: 10rem;
     object-fit: cover;
 }
 
-.profileNavigatorContainer{
+.profileNavigatorContainer {
     display: flex;
     justify-content: space-between;
     max-width: 50rem;
     margin: auto;
 }
 
-.countNLabelContainer{
+.countNLabelContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -96,9 +96,10 @@
     font-size: 1.125rem;
     margin-top: 1.25rem;
     cursor: pointer;
+    width: 5rem;
 }
 
-.prBtn{
+.prBtn {
     padding: 0.75rem 1.5rem;
     background-color: #0466C8;
     color: white;
@@ -107,25 +108,82 @@
     border-radius: 2rem;
     cursor: pointer;
 }
-.editBtn{
+
+.editBtn {
     border-radius: 2rem;
     cursor: pointer;
     background: none;
     border: none;
 }
-.unfollowBtn{
+
+.unfollowBtn {
     color: #0466C8;
     background-color: white;
 }
 
-.prlabel{
+.prlabel {
     padding: 0 1rem;
     border-radius: 1rem;
 }
 
-.followContainer{
+.followContainer {
     max-width: 50rem;
     margin: 2rem auto;
     display: flex;
     flex-direction: column;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 120;
+    position: fixed;
+}
+
+svg {
+    width: 3.25em;
+    transform-origin: center;
+    animation: rotate4 2s linear infinite;
+    z-index: 1000;
+    position: fixed;
+    top: 45%;
+    left: 47%;
+}
+
+circle {
+    fill: none;
+    stroke: hsl(214, 97%, 59%);
+    stroke-width: 2;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: dash4 1.5s ease-in-out infinite;
+    z-index: 1000;
+}
+
+@keyframes rotate4 {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash4 {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 90, 200;
+        stroke-dashoffset: -35px;
+    }
+
+    100% {
+        stroke-dashoffset: -125px;
+    }
 }

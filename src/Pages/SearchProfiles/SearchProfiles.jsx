@@ -67,13 +67,27 @@ const SearchProfiles = ({ contract, accountAddress }) => {
                 <input type="text" placeholder='Search people...' />
                 {/* <button type="submit">Search</button> */}
             </form>
-            <div className="profiles">
-                {profiles.map((profile) => {
-                    return profile.metadata && <>
-                        <ProfileCard address={profile.userAddress} username={profile.metadata.userName} image={`https://ipfs.io/ipfs/${profile.metadata.imageCID}`} />
-                    </>
-                })}
-            </div>
+            {isLoading ? (
+                <div className="loader">
+                    <svg viewBox="25 25 50 50">
+                        <circle r={20} cy={50} cx={50} />
+                    </svg>
+                    <div className="overlay"></div>
+                </div>
+            ) : (
+                <div className="profiles">
+                    {profiles.map((profile) => {
+                        return profile.metadata && (
+                            <ProfileCard
+                                key={profile.userAddress}
+                                address={profile.userAddress}
+                                username={profile.metadata.userName}
+                                image={`https://ipfs.io/ipfs/${profile.metadata.imageCID}`}
+                            />
+                        );
+                    })}
+                </div>
+            )}
         </div>
     )
 }

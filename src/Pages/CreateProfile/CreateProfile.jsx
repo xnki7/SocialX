@@ -77,23 +77,52 @@ const CreateProfile = ({ contract }) => {
         setLoading(false);
     };
 
-    return (
-        <div className='CreateProfile'>
-            <img src={logo} id='logo' alt="" />
-            <form onSubmit={handleFormSubmit}>
-                <p className="heading">Create Profile</p>
-                <input id="file" type="file" accept="image/*" onChange={handleImageUpload} />
-                <label htmlFor="file">
-                    <img id="inputImg" src={img} alt="" />
-                </label>
-                <div className="inputBox">
-                    <p className="inputHead">Username*</p>
-                    <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} required />
+    return (<>
+        {loading ? (
+            <>
+                <div className="loader">
+                    <svg viewBox="25 25 50 50">
+                        <circle r={20} cy={50} cx={50} />
+                    </svg>
+                    <div className="overlay"></div>
                 </div>
-                <button type="submit">Create Profile</button>
-            </form>
-            <p className="footer">Made Just for You, Filled with ❤️</p>
-        </div>
+                <div className='CreateProfile'>
+                    <img src={logo} id='logo' alt="" />
+                    <form onSubmit={handleFormSubmit}>
+                        <p className="heading">Create Profile</p>
+                        <input id="file" type="file" accept="image/*" onChange={handleImageUpload} />
+                        <label htmlFor="file">
+                            <img id="inputImg" src={img} alt="" />
+                        </label>
+                        <div className="inputBox">
+                            <p className="inputHead">Username*</p>
+                            <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} required />
+                        </div>
+                        <button type="submit">Create Profile</button>
+                    </form>
+                    <p className="footer">Made Just for You, Filled with ❤️</p>
+                </div>
+            </>
+        ) : (
+            <div className='CreateProfile'>
+                <img src={logo} id='logo' alt="" />
+                <form onSubmit={handleFormSubmit}>
+                    <p className="heading">Create Profile</p>
+                    <input id="file" type="file" accept="image/*" onChange={handleImageUpload} />
+                    <label htmlFor="file">
+                        <img id="inputImg" src={img} alt="" />
+                    </label>
+                    <div className="inputBox">
+                        <p className="inputHead">Username*</p>
+                        <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} required />
+                    </div>
+                    <button type="submit">Create Profile</button>
+                </form>
+                <p className="footer">Made Just for You, Filled with ❤️</p>
+            </div>
+        )}
+
+    </>
     )
 }
 

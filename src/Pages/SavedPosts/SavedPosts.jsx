@@ -71,13 +71,22 @@ const SavedPosts = ({ contract, accountAddress }) => {
             <div className="header">
                 <Header />
             </div>
-            <div className="posts">
-                {posts && posts.map((post) => (
-                    <div key={post.postId}>
-                        {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <p>No metadata available</p>}
-                    </div>
-                ))}
-            </div>
+            {isLoading ? (
+                <div className="loader">
+                    <svg viewBox="25 25 50 50">
+                        <circle r={20} cy={50} cx={50} />
+                    </svg>
+                    <div className="overlay"></div>
+                </div>
+            ) : (
+                <div className="posts">
+                    {posts.length !== 0 ? posts && posts.map((post) => (
+                        <div key={post.postId}>
+                            {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <p>No metadata available</p>}
+                        </div>
+                    )) : <p className='saver' style={{ color: "white", textAlign: "center", paddingTop: "5rem", opacity: "75%" }}>Nothing To See Here...</p>}
+                </div>
+            )}
             <Navbar contract={contract} accountAddress={accountAddress} />
         </div>
     )

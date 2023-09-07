@@ -15,6 +15,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
     const [isLiked, setIsLiked] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isLoading, setIsLoading] = useState(false);
 
     const showArrows = postPicCIDs && postPicCIDs.length > 1;
 
@@ -32,44 +33,80 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
 
 
     const getProfileData = async () => {
-        const tx = await contract.getUserProfile(postOwner);
-        console.log(tx);
-        fetchProfileMetadata(tx.userProfileCID);
+        try {
+            const tx = await contract.getUserProfile(postOwner);
+            console.log(tx);
+            fetchProfileMetadata(tx.userProfileCID);
+        } catch (error) {
+            console.error("Error getting profile data:", error);
+            setIsLoading(false);
+        }
     }
 
     const getLikesNumber = async () => {
-        const tx = await contract.getLikesNumber(postId);
-        setLikesNumber(tx);
-        getIsPostLiked();
-        getIsPostSaved();
+        try {
+            const tx = await contract.getLikesNumber(postId);
+            setLikesNumber(tx);
+            getIsPostLiked();
+            getIsPostSaved();
+        } catch (error) {
+            console.error("Error getting likes number:", error);
+            setIsLoading(false);
+        }
     }
 
     const getIsPostLiked = async () => {
-        const tx = await contract.UserLikedPost(postId);
-        setIsLiked(tx);
+        try {
+            const tx = await contract.UserLikedPost(postId);
+            setIsLiked(tx);
+        } catch (error) {
+            console.error("Error getting post liked status:", error);
+        }
     }
 
     const getIsPostSaved = async () => {
-        const tx = await contract.getIsPostSaved(postId);
-        setIsSaved(tx);
+        try {
+            const tx = await contract.getIsPostSaved(postId);
+            setIsSaved(tx);
+        } catch (error) {
+            console.error("Error getting post saved status:", error);
+        }
     }
 
     const getCommentsNumber = async () => {
-        const tx = await contract.getCommentsNumber(postId);
-        setCommentsNumber(tx);
+        try {
+            const tx = await contract.getCommentsNumber(postId);
+            setCommentsNumber(tx);
+        } catch (error) {
+            console.error("Error getting comments number:", error);
+        }
     }
 
     const savePost = async () => {
-        const tx = await contract.savePost(postId);
-        await tx.wait();
-        setIsSaved(true);
+        setIsLoading(true);
+        try {
+            const tx = await contract.savePost(postId);
+            await tx.wait();
+            setIsSaved(true);
+            setIsLoading(false);
+        } catch (error) {
+            console.error("Error saving post:", error);
+            setIsLoading(false);
+        }
     }
 
     const likePost = async () => {
-        const tx = await contract.likePost(postId);
-        await tx.wait();
-        setLikesNumber((prevLikes) => ++prevLikes);
-        setIsLiked(true);
+        setIsLoading(true);
+        try {
+            const tx = await contract.likePost(postId);
+            await tx.wait();
+            setLikesNumber((prevLikes) => ++prevLikes);
+            setIsLiked(true);
+            setIsLoading(false);
+        } catch (error) {
+            console.error("Error liking post:", error);
+            setIsLoading(false);
+        }
     }
 
     const fetchProfileMetadata = async (postURI) => {
@@ -106,68 +143,143 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
 
     return (
         <div className='Post'>
-            <div className="Header">
-                <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", marginLeft: "3%" }}>
-                    {profileData && profileData.imageCID ? <img src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" className='profileImage' /> : <p>loading..</p>}
-                </Link>
-                <div className='uNameContainer'>
-                    <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", color: "white" }}>
-                        {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <p>loading..</p>}
-                    </Link>
-                    <p className="timestamp">{formatDate(timestamp)}</p>
-                </div>
-                {/* <p className="address">{postOwner}</p> */}
-            </div>
-
-            <div className="content">
-                {showArrows && (
-                    <button onClick={prevImage} className="carousel-button prev-button">
-                        &lt;
-                    </button>
-                )}
-                {postPicCIDs ? (
-                    <Link to={`/homepage/${postId}`}>
-                        <img
-                            className="postImage"
-                            src={`https://ipfs.io/ipfs/${postPicCIDs[currentImageIndex]}`}
-                            alt=""
-                        />
-                    </Link>
-                ) : (
-                    <></>
-                )}
-                {showArrows && (
-                    <button onClick={nextImage} className="carousel-button next-button">
-                        &gt;
-                    </button>
-                )}
-            </div>
-            <div className="footer">
-                <div className='postContainers'>
-                    <div className='likeCommentBtnContainer'>
-                        <button className='postBtns' disabled={isLiked} onClick={likePost}>
-                            {isLiked ? <img src={liked} /> : <img src={like} />}
-                        </button>
-
-                        <button className="postBtns">
-                            <Link to={`/homepage/${postId}`}>
-                                <img src={comment} alt="" />
+            {isLoading ? (
+                <>
+                    <div className="loader">
+                        <svg viewBox="25 25 50 50">
+                            <circle r={20} cy={50} cx={50} />
+                        </svg>
+                        <div className="overlay"></div>
+                    </div>
+                    <div className="Header">
+                        <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", marginLeft: "3%" }}>
+                            {profileData && profileData.imageCID ? <img src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" className='profileImage' /> : <></>}
+                        </Link>
+                        <div className='uNameContainer'>
+                            <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", color: "white" }}>
+                                {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <></>}
                             </Link>
-                        </button>
+                            <p className="timestamp">{formatDate(timestamp)}</p>
+                        </div>
+                        {/* <p className="address">{postOwner}</p> */}
                     </div>
 
-                    <button className='postBtns' disabled={isSaved} onClick={savePost}> {isSaved ? <img src={saved} /> : <img src={save} />}</button>
-                </div>
-                <div className='likeCmtCountContainer postContainers'>
-                    <p className="likecount count">{likesNumber.toString() + " "} <span className='countlabel'>Likes</span> </p>
-                    <p>.</p>
-                    <p className="commentcount count">{commentsNumber.toString() + " "} <span className='countlabel'><Link to={`/homepage/${postId}`} style={{ textDecoration: "none", color: "#939394" }}>Comments</Link></span> </p>
-                </div>
-            </div>
-            <div className='nameNCaption postContainers'>
-                {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <p>loading..</p>}
-                <p className="textContent">{textContent}</p>
-            </div>
+                    <div className="content">
+                        {showArrows && (
+                            <button onClick={prevImage} className="carousel-button prev-button">
+                                &lt;
+                            </button>
+                        )}
+                        {postPicCIDs ? (
+                            <Link to={`/homepage/${postId}`}>
+                                <img
+                                    className="postImage"
+                                    src={`https://ipfs.io/ipfs/${postPicCIDs[currentImageIndex]}`}
+                                    alt=""
+                                />
+                            </Link>
+                        ) : (
+                            <></>
+                        )}
+                        {showArrows && (
+                            <button onClick={nextImage} className="carousel-button next-button">
+                                &gt;
+                            </button>
+                        )}
+                    </div>
+                    <div className="footer">
+                        <div className='postContainers'>
+                            <div className='likeCommentBtnContainer'>
+                                <button className='postBtns' disabled={isLiked} onClick={likePost}>
+                                    {isLiked ? <img src={liked} /> : <img src={like} />}
+                                </button>
+
+                                <button className="postBtns">
+                                    <Link to={`/homepage/${postId}`}>
+                                        <img src={comment} alt="" />
+                                    </Link>
+                                </button>
+                            </div>
+
+                            <button className='postBtns' disabled={isSaved} onClick={savePost}> {isSaved ? <img src={saved} /> : <img src={save} />}</button>
+                        </div>
+                        <div className='likeCmtCountContainer postContainers'>
+                            <p className="likecount count">{likesNumber.toString() + " "} <span className='countlabel'>Likes</span> </p>
+                            <p>.</p>
+                            <p className="commentcount count">{commentsNumber.toString() + " "} <span className='countlabel'><Link to={`/homepage/${postId}`} style={{ textDecoration: "none", color: "#939394" }}>Comments</Link></span> </p>
+                        </div>
+                    </div>
+                    <div className='nameNCaption postContainers'>
+                        {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <p>loading..</p>}
+                        <p className="textContent">{textContent}</p>
+                    </div>
+                </>
+            ) : (
+                <>
+                    <div className="Header">
+                        <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", marginLeft: "3%" }}>
+                            {profileData && profileData.imageCID ? <img src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" className='profileImage' /> : <></>}
+                        </Link>
+                        <div className='uNameContainer'>
+                            <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", color: "white" }}>
+                                {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <></>}
+                            </Link>
+                            <p className="timestamp">{formatDate(timestamp)}</p>
+                        </div>
+                        {/* <p className="address">{postOwner}</p> */}
+                    </div>
+
+                    <div className="content">
+                        {showArrows && (
+                            <button onClick={prevImage} className="carousel-button prev-button">
+                                &lt;
+                            </button>
+                        )}
+                        {postPicCIDs ? (
+                            <Link to={`/homepage/${postId}`}>
+                                <img
+                                    className="postImage"
+                                    src={`https://ipfs.io/ipfs/${postPicCIDs[currentImageIndex]}`}
+                                    alt=""
+                                />
+                            </Link>
+                        ) : (
+                            <></>
+                        )}
+                        {showArrows && (
+                            <button onClick={nextImage} className="carousel-button next-button">
+                                &gt;
+                            </button>
+                        )}
+                    </div>
+                    <div className="footer">
+                        <div className='postContainers'>
+                            <div className='likeCommentBtnContainer'>
+                                <button className='postBtns' disabled={isLiked} onClick={likePost}>
+                                    {isLiked ? <img src={liked} /> : <img src={like} />}
+                                </button>
+
+                                <button className="postBtns">
+                                    <Link to={`/homepage/${postId}`}>
+                                        <img src={comment} alt="" />
+                                    </Link>
+                                </button>
+                            </div>
+
+                            <button className='postBtns' disabled={isSaved} onClick={savePost}> {isSaved ? <img src={saved} /> : <img src={save} />}</button>
+                        </div>
+                        <div className='likeCmtCountContainer postContainers'>
+                            <p className="likecount count">{likesNumber.toString() + " "} <span className='countlabel'>Likes</span> </p>
+                            <p>.</p>
+                            <p className="commentcount count">{commentsNumber.toString() + " "} <span className='countlabel'><Link to={`/homepage/${postId}`} style={{ textDecoration: "none", color: "#939394" }}>Comments</Link></span> </p>
+                        </div>
+                    </div>
+                    <div className='nameNCaption postContainers'>
+                        {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <p>loading..</p>}
+                        <p className="textContent">{textContent}</p>
+                    </div>
+                </>
+            )}
         </div>
     )
 }

@@ -1,7 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
 import Post from '../../Components/Post/Post';
 import "./Homepage.css"
 import Navbar from "../../Components/Navbar/Navbar"
@@ -73,16 +72,24 @@ const Homepage = ({ contract, accountAddress }) => {
                 <Header />
             </div>
             <Navbar contract={contract} accountAddress={accountAddress} />
-            {/* <h2>Homepage</h2> */}
-            <div className="posts">
-                {posts && posts.map((post) => (
-                    <div key={post.postId}>
-                        {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <p>No metadata available</p>}
-                    </div>
-                ))}
-            </div>
+            {isLoading ? (
+                <div className="loader">
+                    <svg viewBox="25 25 50 50">
+                        <circle r={20} cy={50} cx={50} />
+                    </svg>
+                    <div className="overlay"></div>
+                </div>
+            ) : (
+                <div className="posts">
+                    {posts && posts.map((post) => (
+                        <div key={post.postId}>
+                            {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <></>}
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
-    )
+    );
 }
 
 export default Homepage
