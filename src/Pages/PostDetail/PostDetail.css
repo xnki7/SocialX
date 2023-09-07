@@ -22,11 +22,12 @@
     display: flex;
     align-items: center;
     position: relative;
+    justify-content: center;
 }
 
 @media (max-width:320px) {
     .postComment input {
-        width: 20rem;
+        width: 50rem;
     }
 }
 
@@ -38,15 +39,15 @@
 
 .postComment input {
     font-family: poppins, sans-serif;
-    width: 50%;
-    /* min-width: 20rem; */
+    /* width: 50%; */
+    min-width: 20rem;
     height: 2.5rem;
     border-radius: 2rem;
     border: none;
     background-color: #4E4E50;
     color: white;
     padding-left: 2rem;
-    /* margin-left: 2rem; */
+    margin-left: 2rem;
 }
 
 .postComment input:focus {
