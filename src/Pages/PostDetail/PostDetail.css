@@ -1,8 +1,94 @@
 .PostDetail .commentBox {
-    border: 2px solid black;
-    margin-bottom: 2rem;
+    /* border: 2px solid black; 
+    */
+    padding: 0 1rem;
+    margin-bottom: 1rem;
+}
+.mainCommentContent{
+    margin-top: 5.5rem;
+}
+.postComment{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
-.PostDetail .commentBox img{
-    width: 2rem;
+.postComment form{
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+@media (max-width:320px) {
+    .postComment input{
+        width: 20rem;
+    }
+}
+
+@media (min-width:768px) {
+    .postComment input{
+        width: 45rem;
+    }
+}
+
+.postComment input{
+    font-family: poppins, sans-serif;
+    /* width: 50%; */
+    min-width: 20rem;
+    height: 2.5rem;
+    border-radius: 2rem;
+    border: none;
+    background-color: #4E4E50;
+    color: white;
+    padding-left: 2rem;
+    margin-left: 2rem;
+}
+
+.postComment button{
+    color: white;
+    background: none;
+    border: none;
+    display: flex;
+    position: relative;
+    right: 2.5rem;
+    cursor: pointer;
+}
+
+.comments{
+    margin: 1.5rem auto;
+}
+
+.profileDataContainer{
+    display: flex;
+    gap:1.5rem;
+}
+
+.profileDataContainer img{
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 2.5rem;
+    object-fit: cover;
+}
+
+.commentUsername{
+    font-size: 1rem;
+    color: white;
+    font-weight: 400;
+}
+
+.commentAddress{
+    font-size: 0.75rem;
+    color: #4E4E50;
+}
+
+.commentDate{
+    display: flex;
+    color: #939394;
+    font-size: 0.75rem;
+    align-items: center;
+}
+
+.commentData{
+    color: white;
+    margin-left: 4rem;
 }

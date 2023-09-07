@@ -113,7 +113,7 @@ function App() {
         />
         <Route
           path='/homepage/:postId'
-          element={<PostDetail contract={contract} />}
+          element={<PostDetail contract={contract} accountAddress={accountAddress}/>}
         />
         {/* <Route
           path='/profile'

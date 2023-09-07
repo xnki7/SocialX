@@ -4,8 +4,11 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import Post from '../../Components/Post/Post';
 import "./PostDetail.css"
+import commentBtn from "./comment.svg"
+import Header from "../../Components/Header/Header"
+import Navbar from "../../Components/Navbar/Navbar"
 
-const PostDetail = ({ contract }) => {
+const PostDetail = ({ contract, accountAddress }) => {
     const { postId } = useParams();
     const [post, setPost] = useState(null);
     const [postData, setPostData] = useState(null);
@@ -130,24 +133,37 @@ const PostDetail = ({ contract }) => {
 
     return (
         <div className='PostDetail'>
-            {post && postData ? <Post postId={postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={postData.textContent} postPicCIDs={postData.imageCIDs} /> : <p>loading...</p>}
-            <div className="postComment">
-                <form onSubmit={handleFormSubmit}>
-                    <input type="text" placeholder='Write your comment here' value={comment} onChange={(e) => { setComment(e.target.value) }} />
-                    <button type="submit">Comment</button>
-                </form>
+            <div className="header">
+                <Header />
             </div>
-            <div className="comments">
-                {comments.map((comment) => {
-                    return comment.profileMetadata && comment.commentMetadata && <div className='commentBox'>
-                        <img src={`https://ipfs.io/ipfs/${comment.profileMetadata.imageCID}`} alt="" />
-                        <p>{comment.profileMetadata.userName}</p>
-                        <p>{comment.commentOwner}</p>
-                        <p>{formatDate(comment.commentTimestamp)}</p>
-                        <p>{comment.commentMetadata.comment}</p>
-                    </div>
-                })}
+            <div className='mainCommentContent'>
+                {post && postData ? <Post postId={postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={postData.textContent} postPicCIDs={postData.imageCIDs} /> : <p>loading...</p>}
+
+                {/* Comment Section */}
+                <div className="postComment">
+                    <form onSubmit={handleFormSubmit}>
+                        <input type="text" placeholder='Send Your Comment...' value={comment} onChange={(e) => { setComment(e.target.value) }} />
+                        <button type="submit"><img src={commentBtn} alt="" /></button>
+                    </form>
+                </div>
+                <div className="comments">
+                    {comments.map((comment) => {
+                        return comment.profileMetadata && comment.commentMetadata && <div className='commentBox'>
+                            <div className='profileDataContainer'>
+                                <img src={`https://ipfs.io/ipfs/${comment.profileMetadata.imageCID}`} alt="" />
+                                <div className='profileDataNTimeContainer'>
+                                    <p className='commentUsername'>{comment.profileMetadata.userName}</p>
+                                    <p className='commentAddress'>{comment.commentOwner.slice(0, 6) + "..." + comment.commentOwner.slice(38, 42)}</p>
+
+                                </div>
+                                <p className='commentDate'>{formatDate(comment.commentTimestamp)}</p>
+                            </div>
+                            <p className='commentData'>{comment.commentMetadata.comment}</p>
+                        </div>
+                    })}
+                </div>
             </div>
+            <Navbar contract={contract} accountAddress={accountAddress} />
         </div>
     )
 }
