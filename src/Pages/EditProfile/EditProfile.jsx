@@ -60,15 +60,39 @@ const EditProfile = ({ contract, accountAddress }) => {
         setLoading(true);
 
         try {
-            let imageCID = "QmbWt4Fyggz6dWEvvGFW6TjSSyL4TLo2FfBKmC7MWD1r6n";
+            let imageCID;
+            if (image === null) {
+                alert("Insert a profile picture.")
+            }
+            else {
+                if (image) {
+                    const formData = new FormData();
+                    formData.append("file", image);
 
-            if (image) {
-                const formData = new FormData();
-                formData.append("file", image);
+                    const imageUploadResponse = await axios.post(
+                        "https://api.pinata.cloud/pinning/pinFileToIPFS",
+                        formData,
+                        {
+                            headers: {
+                                pinata_api_key: "b3909c367f38816509ea",
+                                pinata_secret_api_key:
+                                    "d7e034abe6d3da97a2267aa7065ab20d513f8dc0e1015cdd7c9ed91c99088231",
+                            },
+                        }
+                    );
 
-                const imageUploadResponse = await axios.post(
-                    "https://api.pinata.cloud/pinning/pinFileToIPFS",
-                    formData,
+                    imageCID = imageUploadResponse.data.IpfsHash;
+                }
+
+                const profileData = {
+                    userName: userName,
+                    bio: bio,
+                    imageCID: imageCID,
+                };
+
+                const profileUploadResponse = await axios.post(
+                    "https://api.pinata.cloud/pinning/pinJSONToIPFS",
+                    profileData,
                     {
                         headers: {
                             pinata_api_key: "b3909c367f38816509ea",
@@ -78,32 +102,12 @@ const EditProfile = ({ contract, accountAddress }) => {
                     }
                 );
 
-                imageCID = imageUploadResponse.data.IpfsHash;
+                const tx = await contract.createUserProfile(profileUploadResponse.data.IpfsHash);
+                await tx.wait();
+                navigate(`/profile/${accountAddress}`)
+                setUserName(""); // Clear the username input
+                setImage(null); // Clear the image
             }
-
-            const profileData = {
-                userName: userName,
-                bio: bio,
-                imageCID: imageCID,
-            };
-
-            const profileUploadResponse = await axios.post(
-                "https://api.pinata.cloud/pinning/pinJSONToIPFS",
-                profileData,
-                {
-                    headers: {
-                        pinata_api_key: "b3909c367f38816509ea",
-                        pinata_secret_api_key:
-                            "d7e034abe6d3da97a2267aa7065ab20d513f8dc0e1015cdd7c9ed91c99088231",
-                    },
-                }
-            );
-
-            const tx = await contract.createUserProfile(profileUploadResponse.data.IpfsHash);
-            await tx.wait();
-            navigate(`/profile/${accountAddress}`)
-            setUserName(""); // Clear the username input
-            setImage(null); // Clear the image
         } catch (error) {
             console.error("Error uploading profile data", error);
         }
@@ -123,7 +127,7 @@ const EditProfile = ({ contract, accountAddress }) => {
                 <Header />
                 <form onSubmit={handleFormSubmit}>
                     <p className="heading">Edit Profile</p>
-                    <input id="file" type="file" accept="image/*" onChange={handleImageUpload} required />
+                    <input id="file" type="file" accept="image/*" onChange={handleImageUpload} />
                     <label htmlFor="file">
                         <img id="inputImg" src={img} alt="" />
                     </label>
