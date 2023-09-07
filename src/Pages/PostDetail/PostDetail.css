@@ -6,11 +6,14 @@
 }
 .mainCommentContent{
     margin-top: 5.5rem;
+    margin-bottom: 9rem;
 }
 .postComment{
     display: flex;
     justify-content: center;
     align-items: center;
+    position: fixed;
+    bottom: 5.5rem;
 }
 
 .postComment form{
@@ -42,6 +45,10 @@
     color: white;
     padding-left: 2rem;
     margin-left: 2rem;
+}
+
+.postComment input:focus{
+    outline: 1px solid white;
 }
 
 .postComment button{

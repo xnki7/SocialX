@@ -139,13 +139,7 @@ const PostDetail = ({ contract, accountAddress }) => {
             <div className='mainCommentContent'>
                 {post && postData ? <Post postId={postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={postData.textContent} postPicCIDs={postData.imageCIDs} /> : <p>loading...</p>}
 
-                {/* Comment Section */}
-                <div className="postComment">
-                    <form onSubmit={handleFormSubmit}>
-                        <input type="text" placeholder='Send Your Comment...' value={comment} onChange={(e) => { setComment(e.target.value) }} />
-                        <button type="submit"><img src={commentBtn} alt="" /></button>
-                    </form>
-                </div>
+                
                 <div className="comments">
                     {comments.map((comment) => {
                         return comment.profileMetadata && comment.commentMetadata && <div className='commentBox'>
@@ -161,6 +155,13 @@ const PostDetail = ({ contract, accountAddress }) => {
                             <p className='commentData'>{comment.commentMetadata.comment}</p>
                         </div>
                     })}
+                </div>
+                {/* Comment Section */}
+                <div className="postComment">
+                    <form onSubmit={handleFormSubmit}>
+                        <input type="text" placeholder='Send Your Comment...' value={comment} onChange={(e) => { setComment(e.target.value) }} />
+                        <button type="submit"><img src={commentBtn} alt="" /></button>
+                    </form>
                 </div>
             </div>
             <Navbar contract={contract} accountAddress={accountAddress} />
