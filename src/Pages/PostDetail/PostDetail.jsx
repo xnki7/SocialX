@@ -42,6 +42,7 @@ const PostDetail = ({ contract, accountAddress }) => {
     };
 
     const handleFormSubmit = async (e) => {
+        setIsLoading(true);
         e.preventDefault();
         try {
             const commentData = {
@@ -69,6 +70,7 @@ const PostDetail = ({ contract, accountAddress }) => {
         } catch (e) {
             console.log(e);
         }
+        setIsLoading(false);
     }
 
     useEffect(() => {
@@ -132,40 +134,45 @@ const PostDetail = ({ contract, accountAddress }) => {
     }
 
     return (
-        <div className='PostDetail'>
-            <div className="header">
-                <Header />
-            </div>
-            <div className='mainCommentContent'>
-                {post && postData ? <Post postId={postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={postData.textContent} postPicCIDs={postData.imageCIDs} /> : <p>loading...</p>}
+        <>
+            <div className='PostDetail'>
+                <div className="header">
+                    <Header />
+                </div>
+                {isLoading ? (<div className="loader">
+                    <svg viewBox="25 25 50 50">
+                        <circle r={20} cy={50} cx={50} />
+                    </svg>
+                    <div className="overlay"></div>
+                </div>) : (<div className='mainCommentContent'>
+                    {post && postData ? <Post postId={postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={postData.textContent} postPicCIDs={postData.imageCIDs} /> : <p>loading...</p>}
+                    <div className="comments">
+                        {comments.map((comment) => {
+                            return comment.profileMetadata && comment.commentMetadata && <div className='commentBox'>
+                                <div className='profileDataContainer'>
+                                    <img src={`https://ipfs.io/ipfs/${comment.profileMetadata.imageCID}`} alt="" />
+                                    <div className='profileDataNTimeContainer'>
+                                        <p className='commentUsername'>{comment.profileMetadata.userName}</p>
+                                        <p className='commentAddress'>{comment.commentOwner.slice(0, 6) + "..." + comment.commentOwner.slice(38, 42)}</p>
 
-                
-                <div className="comments">
-                    {comments.map((comment) => {
-                        return comment.profileMetadata && comment.commentMetadata && <div className='commentBox'>
-                            <div className='profileDataContainer'>
-                                <img src={`https://ipfs.io/ipfs/${comment.profileMetadata.imageCID}`} alt="" />
-                                <div className='profileDataNTimeContainer'>
-                                    <p className='commentUsername'>{comment.profileMetadata.userName}</p>
-                                    <p className='commentAddress'>{comment.commentOwner.slice(0, 6) + "..." + comment.commentOwner.slice(38, 42)}</p>
-
+                                    </div>
+                                    <p className='commentDate'>{formatDate(comment.commentTimestamp)}</p>
                                 </div>
-                                <p className='commentDate'>{formatDate(comment.commentTimestamp)}</p>
+                                <p className='commentData'>{comment.commentMetadata.comment}</p>
                             </div>
-                            <p className='commentData'>{comment.commentMetadata.comment}</p>
-                        </div>
-                    })}
-                </div>
-                {/* Comment Section */}
-                <div className="postComment">
-                    <form onSubmit={handleFormSubmit}>
-                        <input type="text" placeholder='Send Your Comment...' value={comment} onChange={(e) => { setComment(e.target.value) }} />
-                        <button type="submit"><img src={commentBtn} alt="" /></button>
-                    </form>
-                </div>
+                        })}
+                    </div>
+                    {/* Comment Section */}
+                    <div className="postComment">
+                        <form onSubmit={handleFormSubmit}>
+                            <input type="text" placeholder='Send Your Comment...' value={comment} onChange={(e) => { setComment(e.target.value) }} required />
+                            <button type="submit"><img src={commentBtn} alt="" /></button>
+                        </form>
+                    </div>
+                </div>)}
             </div>
             <Navbar contract={contract} accountAddress={accountAddress} />
-        </div>
+        </>
     )
 }
 

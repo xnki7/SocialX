@@ -80,12 +80,26 @@ const SavedPosts = ({ contract, accountAddress }) => {
                 </div>
             ) : (
                 <div className="posts">
-                    {posts.length !== 0 ? posts && posts.map((post) => (
+                    {posts.length !== 0 ? [...posts].reverse().map((post) => (
                         <div key={post.postId}>
-                            {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <p>No metadata available</p>}
+                            {post.metadata ? (
+                                <Post
+                                    postId={post.postId}
+                                    contract={contract}
+                                    postOwner={post.postOwner}
+                                    timestamp={post.postTimestamp}
+                                    textContent={post.metadata.textContent}
+                                    postPicCIDs={post.metadata.imageCIDs}
+                                />
+                            ) : (
+                                <></>
+                            )}
                         </div>
-                    )) : <p className='saver' style={{ color: "white", textAlign: "center", paddingTop: "5rem", opacity: "75%" }}>Nothing To See Here...</p>}
+                    )) : (
+                        <p className='saver' style={{ color: "white", textAlign: "center", paddingTop: "5rem", opacity: "75%" }}>Nothing To See Here...</p>
+                    )}
                 </div>
+
             )}
             <Navbar contract={contract} accountAddress={accountAddress} />
         </div>

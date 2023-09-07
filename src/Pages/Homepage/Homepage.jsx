@@ -81,7 +81,7 @@ const Homepage = ({ contract, accountAddress }) => {
                 </div>
             ) : (
                 <div className="posts">
-                    {posts && posts.map((post) => (
+                    {posts && posts.slice().reverse().map((post) => (
                         <div key={post.postId}>
                             {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <></>}
                         </div>

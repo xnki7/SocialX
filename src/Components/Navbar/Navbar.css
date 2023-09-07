@@ -1,7 +1,8 @@
 .Navbar {
     width: 100%;
     position: fixed;
-    top: 91vh;
+    /* top: 90vh; */
+    bottom: 1dvh;
     z-index: 20;
 }
 

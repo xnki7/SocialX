@@ -1,57 +1,59 @@
 .PostDetail .commentBox {
-    /* border: 2px solid black; 
-    */
     padding: 0 1rem;
     margin-bottom: 1rem;
 }
-.mainCommentContent{
+
+.mainCommentContent {
     margin-top: 5.5rem;
     margin-bottom: 9rem;
 }
-.postComment{
+
+.postComment {
     display: flex;
     justify-content: center;
     align-items: center;
     position: fixed;
     bottom: 5.5rem;
+    width: 100%;
 }
 
-.postComment form{
+.postComment form {
+    width: 100%;
     display: flex;
     align-items: center;
     position: relative;
 }
 
 @media (max-width:320px) {
-    .postComment input{
+    .postComment input {
         width: 20rem;
     }
 }
 
 @media (min-width:768px) {
-    .postComment input{
-        width: 45rem;
+    .postComment input {
+        width: 43rem;
     }
 }
 
-.postComment input{
+.postComment input {
     font-family: poppins, sans-serif;
-    /* width: 50%; */
-    min-width: 20rem;
+    width: 50%;
+    /* min-width: 20rem; */
     height: 2.5rem;
     border-radius: 2rem;
     border: none;
     background-color: #4E4E50;
     color: white;
     padding-left: 2rem;
-    margin-left: 2rem;
+    /* margin-left: 2rem; */
 }
 
-.postComment input:focus{
+.postComment input:focus {
     outline: 1px solid white;
 }
 
-.postComment button{
+.postComment button {
     color: white;
     background: none;
     border: none;
@@ -61,41 +63,124 @@
     cursor: pointer;
 }
 
-.comments{
+.comments {
     margin: 1.5rem auto;
+    width: 50%;
 }
 
-.profileDataContainer{
+@media (max-width: 320px) {
+
+    /* Adjust font size and other styles for phones */
+    .comments {
+        margin: 1.5rem auto;
+        width: 90%;
+    }
+
+    input {
+        width: 90%;
+    }
+}
+
+@media (max-width: 768px) {
+
+    /* Adjust font size and other styles for phones */
+    .comments {
+        margin: 1.5rem auto;
+        width: 90%;
+    }
+
+    input {
+        width: 90%;
+    }
+}
+
+.profileDataContainer {
     display: flex;
-    gap:1.5rem;
+    gap: 1.5rem;
 }
 
-.profileDataContainer img{
+.profileDataContainer img {
     height: 2.5rem;
     width: 2.5rem;
     border-radius: 2.5rem;
     object-fit: cover;
 }
 
-.commentUsername{
+.commentUsername {
     font-size: 1rem;
     color: white;
     font-weight: 400;
 }
 
-.commentAddress{
+.commentAddress {
     font-size: 0.75rem;
     color: #4E4E50;
 }
 
-.commentDate{
+.commentDate {
     display: flex;
     color: #939394;
     font-size: 0.75rem;
     align-items: center;
 }
 
-.commentData{
+.commentData {
     color: white;
+    font-size: 0.9rem;
     margin-left: 4rem;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(3px);
+    z-index: 120;
+    position: fixed;
+}
+
+svg {
+    width: 3.25em;
+    transform-origin: center;
+    animation: rotate4 2s linear infinite;
+    z-index: 1000;
+    position: fixed;
+    top: 45%;
+    left: 47%;
+}
+
+circle {
+    fill: none;
+    stroke: hsl(214, 97%, 59%);
+    stroke-width: 2;
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0;
+    stroke-linecap: round;
+    animation: dash4 1.5s ease-in-out infinite;
+    z-index: 1000;
+}
+
+@keyframes rotate4 {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+@keyframes dash4 {
+    0% {
+        stroke-dasharray: 1, 200;
+        stroke-dashoffset: 0;
+    }
+
+    50% {
+        stroke-dasharray: 90, 200;
+        stroke-dashoffset: -35px;
+    }
+
+    100% {
+        stroke-dashoffset: -125px;
+    }
 }

@@ -1,16 +1,15 @@
-import React from 'react'
-import { useState } from 'react'
-import { useNavigate } from "react-router-dom";
-import axios from 'axios'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 import Header from '../Header/Header';
 import Navbar from '../../Components/Navbar/Navbar';
-import img from "./imgPlus.svg"
-import "./CreatePost.css"
+import img from './imgPlus.svg';
+import './CreatePost.css';
 
 const CreatePost = ({ contract, accountAddress }) => {
     const navigate = useNavigate();
     const [images, setImages] = useState([]);
-    const [textContent, setTextContent] = useState("");
+    const [textContent, setTextContent] = useState('');
     const [loading, setLoading] = useState(false);
 
     const handleImageUpload = async (event) => {
@@ -29,13 +28,13 @@ const CreatePost = ({ contract, accountAddress }) => {
         event.preventDefault();
 
         setLoading(true);
-        try {
-            let imageCIDs = [];
+        if (images.length === 0) {
+            alert('Please select at least one image.');
+        } else {
+            setLoading(true);
+            try {
+                let imageCIDs = [];
 
-            if (images.length === 0) {
-                imageCIDs = null;
-            }
-            else {
                 for (const image of images) {
                     const formData = new FormData();
                     formData.append('file', image);
@@ -54,61 +53,79 @@ const CreatePost = ({ contract, accountAddress }) => {
 
                     imageCIDs.push(imageUploadResponse.data.IpfsHash);
                 }
+
+                const postData = {
+                    textContent: textContent,
+                    imageCIDs: imageCIDs,
+                };
+
+                const postUploadResponse = await axios.post(
+                    'https://api.pinata.cloud/pinning/pinJSONToIPFS',
+                    postData,
+                    {
+                        headers: {
+                            pinata_api_key: "4c06043fd7ebff08f27b",
+                            pinata_secret_api_key:
+                                "ec4cfdc1fce8125c18ffe9f8dbbdb583c0212e7ce88cefc8b47a1620ee44a7b4",
+                        },
+                    }
+                );
+
+                console.log(postUploadResponse.data.IpfsHash);
+                const tx = await contract.createPost(postUploadResponse.data.IpfsHash);
+                await tx.wait();
+                navigate('/homepage');
+
+                setTextContent('');
+                setImages([]);
+            } catch (error) {
+                console.error('Error uploading profile data', error);
+                // You can also display the error message to the user
+                alert(error.message);
             }
-
-            const postData = {
-                textContent: textContent,
-                imageCIDs: imageCIDs,
-            };
-
-            const postUploadResponse = await axios.post(
-                'https://api.pinata.cloud/pinning/pinJSONToIPFS',
-                postData,
-                {
-                    headers: {
-                        pinata_api_key: "4c06043fd7ebff08f27b",
-                        pinata_secret_api_key:
-                            "ec4cfdc1fce8125c18ffe9f8dbbdb583c0212e7ce88cefc8b47a1620ee44a7b4",
-                    },
-                }
-            );
-
-            console.log(postUploadResponse.data.IpfsHash);
-            const tx = await contract.createPost(postUploadResponse.data.IpfsHash);
-            await tx.wait();
-            navigate('/homepage')
-
-            setTextContent('');
-            setImages([]);
-        } catch (error) {
-            console.error('Error uploading profile data', error);
+            setLoading(false);
         }
-
-        setLoading(false);
     };
 
     return (
         <>
-            <div className="header">
-                <Header />
-            </div>
-            <div className='CreatePost'>
-                <form onSubmit={handleFormSubmit}>
-                    <h2>Create Post</h2>
-                    <input id="file" type="file" accept="image/*" onChange={handleImageUpload} required />
-                    <label htmlFor="file">
-                        <img id="inputImg" src={img} alt="" />
-                    </label>
-                    <div className="inputBox">
-                        <p className="inputHead">Caption</p>
-                        <textarea placeholder='Caption...' value={textContent} onChange={(e) => setTextContent(e.target.value)} />
-                    </div>
-                    <button type="submit">Create Post</button>
-                </form>
-                <Navbar contract={contract} accountAddress={accountAddress} />
-            </div>
-        </>
-    )
-}
+            {loading ? (<div className="loader">
+                <svg viewBox="25 25 50 50">
+                    <circle r={20} cy={50} cx={50} />
+                </svg>
+                <div className="overlay"></div>
+            </div>) : <>
+                <div className="header">
+                    <Header />
+                </div>
+                <div className="CreatePost">
+                    <form onSubmit={handleFormSubmit}>
+                        <h2>Create Post</h2>
+                        <input
+                            id="file"
+                            type="file"
+                            accept="image/*"
+                            onChange={handleImageUpload}
+                            multiple
+                        />
+                        <label htmlFor="file">
+                            <img id="inputImg" src={img} alt="" />
+                        </label>
+                        <div className="inputBox">
+                            <p className="inputHead">Caption</p>
+                            <textarea
+                                placeholder="Caption..."
+                                value={textContent}
+                                onChange={(e) => setTextContent(e.target.value)}
+                            />
+                        </div>
+                        <button type="submit">Create Post</button>
+                    </form>
+                    <Navbar contract={contract} accountAddress={accountAddress} />
+                </div></>}
 
-export default CreatePost
+        </>
+    );
+};
+
+export default CreatePost;
