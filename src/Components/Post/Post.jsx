@@ -6,6 +6,9 @@ import liked from "./Images/Liked.svg";
 import save from "./Images/Save.svg";
 import saved from "./Images/Saved.svg";
 import comment from "./Images/Comment.svg";
+import deleteIcon from "./Images/deleteIcon.svg";
+import flag from "./Images/flag.svg"
+import flagged from "./Images/flagged.svg"
 import "./Post.css";
 
 const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs, accountAddress }) => {
@@ -243,17 +246,20 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
             ) : (
                 <>
                     <div className="Header">
-                        <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", marginLeft: "3%" }}>
-                            {profileData && profileData.imageCID ? <img src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" className='profileImage' /> : <></>}
-                        </Link>
-                        <div className='uNameContainer'>
-                            <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", color: "white" }}>
-                                {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <></>}
+                        <div className='profileWrapper'>
+                            <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", marginLeft: "3%" }}>
+                                {profileData && profileData.imageCID ? <img src={`https://ipfs.io/ipfs/${profileData.imageCID}`} alt="" className='profileImage' /> : <></>}
                             </Link>
-                            <p className="timestamp">{formatDate(timestamp)}</p>
+                            <div className='uNameContainer'>
+                                <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", color: "white" }}>
+                                    {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <></>}
+                                </Link>
+                                <p className="timestamp">{formatDate(timestamp)}</p>
+                            </div>
                         </div>
                         {
-                            (accountAddress === postOwner ? <><button onClick={deletePost}>Delete Post</button></> : <><button onClick={reportPost}>Report</button></>)
+                            (accountAddress === postOwner ? <div><img className='delRepIcon' src={deleteIcon} alt="" onClick={deletePost} /></div> : <><img src={flag} className='delRepIcon' onClick={reportPost}/></>)
+                            // ****************
                         }
 
                         {/* <p className="address">{postOwner}</p> */}
