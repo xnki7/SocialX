@@ -146,7 +146,7 @@ const PostDetail = ({ contract, accountAddress }) => {
                     </svg>
                     <div className="overlay"></div>
                 </div>) : (<div className='mainCommentContent'>
-                    {post && postData ? <Post postId={postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={postData.textContent} postPicCIDs={postData.imageCIDs} /> : <></>}
+                    {post && postData ? <Post postId={postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={postData.textContent} postPicCIDs={postData.imageCIDs} accountAddress={accountAddress}/> : <></>}
                     <div className="comments">
                         {comments.map((comment) => {
                             return comment.profileMetadata && comment.commentMetadata && <div className='commentBox'>

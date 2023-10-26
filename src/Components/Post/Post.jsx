@@ -8,7 +8,7 @@ import saved from "./Images/Saved.svg";
 import comment from "./Images/Comment.svg";
 import "./Post.css";
 
-const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs }) => {
+const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs, accountAddress }) => {
     const [profileData, setProfileData] = useState(null);
     const [likesNumber, setLikesNumber] = useState(0);
     const [commentsNumber, setCommentsNumber] = useState(0);
@@ -109,6 +109,32 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
         }
     }
 
+    const deletePost = async () => {
+        setIsLoading(true);
+        try {
+            const tx = await contract.deletePost(postId);
+            await tx.wait();
+            setIsLoading(false);
+            window.location.reload();
+        } catch (error) {
+            console.error("Error deleting post:", error);
+            setIsLoading(false);
+        }
+    }
+
+    const reportPost = async () => {
+        setIsLoading(true);
+        try {
+            const tx = await contract.reportPost(postId);
+            await tx.wait();
+            setIsLoading(false);
+            window.location.reload();
+        } catch (error) {
+            console.error("Error reporting post:", error);
+            setIsLoading(false);
+        }
+    }
+
     const fetchProfileMetadata = async (postURI) => {
         try {
             const response = await axios.get(`https://ipfs.io/ipfs/${postURI}`);
@@ -157,7 +183,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                         </Link>
                         <div className='uNameContainer'>
                             <Link to={`/profile/${postOwner}`} style={{ textDecoration: "none", color: "white" }}>
-                                {profileData && profileData.userName ? <p className="username">{profileData.userName}</p> : <></>}
+                                {profileData && profileData.userName ? <p className="username">{profileData.userName}1234</p> : <></>}
                             </Link>
                             <p className="timestamp">{formatDate(timestamp)}</p>
                         </div>
@@ -226,6 +252,10 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                             </Link>
                             <p className="timestamp">{formatDate(timestamp)}</p>
                         </div>
+                        {
+                            (accountAddress === postOwner ? <><button onClick={deletePost}>Delete Post</button></> : <><button onClick={reportPost}>Report</button></>)
+                        }
+
                         {/* <p className="address">{postOwner}</p> */}
                     </div>
 

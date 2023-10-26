@@ -39,9 +39,14 @@ contract SocialX {
     mapping(address => mapping(uint256 => bool)) hasUserLikedPost;
     mapping(uint256 => Comment[]) postComments;
     mapping(address => mapping(uint256 => bool)) isPostSaved;
+    mapping(uint256 => mapping(address => bool)) hasUserReportedPost;
+    mapping(uint256 => uint256) postReports;
+    mapping(address => uint256) timesReported;
+    mapping(address => bool) public bannedUsers;
 
     // Function to create a user profile
     function createUserProfile(string memory _userProfileCID) public {
+        require(!bannedUsers[msg.sender], "You are banned from this platform");
         UserProfile memory userProfile = UserProfile(
             msg.sender,
             _userProfileCID
@@ -49,6 +54,25 @@ contract SocialX {
         Profiles[msg.sender] = userProfile;
         allProfiles.push(userProfile);
         isProfileCreated[msg.sender] = true;
+    }
+
+    // Function to update user profile
+    function updateProfile(string memory _newProfileCID) public {
+        require(
+            isProfileCreated[msg.sender],
+            "Profile does not exist. Create a profile first."
+        );
+
+        UserProfile storage userProfile = Profiles[msg.sender];
+        userProfile.userProfileCID = _newProfileCID;
+
+        // Update the profile in the allProfiles array
+        for (uint256 i = 0; i < allProfiles.length; i++) {
+            if (allProfiles[i].userAddress == msg.sender) {
+                allProfiles[i] = userProfile;
+                break;
+            }
+        }
     }
 
     // Function to follow a user
@@ -153,6 +177,144 @@ contract SocialX {
         if (userPostIndex < userPostList.length) {
             userPostList[userPostIndex] = userPostList[userPostList.length - 1];
             userPostList.pop();
+        }
+    }
+
+    // Function to report a post
+    function reportPost(uint256 _postId) public {
+        require(
+            !hasUserReportedPost[_postId][msg.sender],
+            "You can only report a post once"
+        );
+
+        postReports[_postId]++;
+        hasUserReportedPost[_postId][msg.sender] = true;
+
+        if (postReports[_postId] >= calculateReportThreshold()) {
+            deleteReportedPost(_postId);
+        }
+    }
+
+    // Function to calculate the report threshold based on user base
+    function calculateReportThreshold() internal view returns (uint256) {
+        uint256 userBase = allProfiles.length; // Assuming allProfiles represents all registered users
+
+        if (userBase <= 100) {
+            return (userBase * 20) / 100;
+        } else if (userBase > 100 && userBase <= 1000) {
+            return (userBase * 10) / 100;
+        } else if (userBase > 1000 && userBase <= 10000) {
+            return (userBase * 5) / 100;
+        } else if (userBase > 10000 && userBase <= 50000) {
+            return (userBase * 2) / 100;
+        } else if (userBase > 50000 && userBase <= 100000) {
+            return (userBase * 1) / 100;
+        } else if (userBase > 100000 && userBase <= 500000) {
+            return (userBase * 5) / 1000;
+        } else if (userBase > 500000 && userBase <= 1000000) {
+            return (userBase * 1) / 1000;
+        } else {
+            return (userBase * 5) / 10000;
+        }
+    }
+
+    // Function to delete a reported post
+    function deleteReportedPost(uint256 _postId) private {
+        Post memory postToDelete = idToPost[_postId];
+        require(postToDelete.postId != 0, "Post does not exist");
+
+        uint256 postIndex = findPostIndex(_postId);
+        require(postIndex < allPosts.length, "Post not found");
+
+        // Check if the post has been reported more than 5 times
+        if (timesReported[idToPost[_postId].postOwner] >= 4) {
+            // Delete the user's profile and posts
+            deleteProfile(idToPost[_postId].postOwner);
+        } else {
+            // Otherwise, delete the post
+            timesReported[idToPost[_postId].postOwner]++;
+            allPosts[postIndex] = allPosts[allPosts.length - 1];
+            allPosts.pop();
+
+            delete idToPost[_postId];
+
+            Post[] storage userPostList = userPosts[msg.sender];
+            uint256 userPostIndex = findUserPostIndex(userPostList, _postId);
+            if (userPostIndex < userPostList.length) {
+                userPostList[userPostIndex] = userPostList[
+                    userPostList.length - 1
+                ];
+                userPostList.pop();
+            }
+        }
+    }
+
+    function deleteProfile(address _postOwner) public {
+        require(isProfileCreated[_postOwner], "Profile does not exist");
+
+        // Ban the user
+        bannedUsers[_postOwner] = true;
+
+        // Delete user's posts from allPosts
+        Post[] storage userPostList = userPosts[_postOwner];
+        for (uint256 i = 0; i < userPostList.length; i++) {
+            delete idToPost[userPostList[i].postId];
+            deletePostFromAllPosts(userPostList[i].postId);
+        }
+        delete userPosts[_postOwner];
+
+        // Delete user's saved posts
+        Post[] storage savedPosts = userSavedPosts[_postOwner];
+        for (uint256 i = 0; i < savedPosts.length; i++) {
+            delete idToPost[savedPosts[i].postId];
+        }
+        delete userSavedPosts[_postOwner];
+
+        // Delete user's followers and following information
+        UserProfile[] storage followers = userFollowerProfiles[_postOwner];
+        for (uint256 i = 0; i < followers.length; i++) {
+            address followerAddress = followers[i].userAddress;
+            removeProfile(userFollowingProfiles[followerAddress], _postOwner);
+            delete isUserFollowing[followerAddress][_postOwner];
+        }
+        delete userFollowerProfiles[_postOwner];
+
+        UserProfile[] storage following = userFollowingProfiles[_postOwner];
+        for (uint256 i = 0; i < following.length; i++) {
+            address followingAddress = following[i].userAddress;
+            removeProfile(userFollowerProfiles[followingAddress], _postOwner);
+            delete isUserFollowing[_postOwner][followingAddress];
+        }
+        delete userFollowingProfiles[_postOwner];
+
+        // Remove user's profile from allProfiles
+        removeProfile(allProfiles, _postOwner);
+
+        // Remove user's posts from allPosts
+        removeUserPostsFromAllPosts(_postOwner);
+
+        // Reset user's follower and following counts
+        userFollowerCount[_postOwner] = 0;
+        userFollowingCount[_postOwner] = 0;
+    }
+
+    // Internal function to remove user's posts from allPosts
+    function removeUserPostsFromAllPosts(address userAddress) internal {
+        for (uint256 i = 0; i < allPosts.length; i++) {
+            if (allPosts[i].postOwner == userAddress) {
+                allPosts[i] = allPosts[allPosts.length - 1];
+                allPosts.pop();
+                i--; // Check the replaced element again
+            }
+        }
+    }
+
+    // Internal function to delete a post from allPosts
+    function deletePostFromAllPosts(uint256 postId) internal {
+        uint256 postIndex = findPostIndex(postId);
+        if (postIndex < allPosts.length) {
+            allPosts[postIndex] = allPosts[allPosts.length - 1];
+            allPosts.pop();
         }
     }
 

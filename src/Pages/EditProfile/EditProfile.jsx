@@ -102,7 +102,7 @@ const EditProfile = ({ contract, accountAddress }) => {
                     }
                 );
 
-                const tx = await contract.createUserProfile(profileUploadResponse.data.IpfsHash);
+                const tx = await contract.updateProfile(profileUploadResponse.data.IpfsHash);
                 await tx.wait();
                 navigate(`/profile/${accountAddress}`)
                 setUserName(""); // Clear the username input

@@ -83,7 +83,7 @@ const Homepage = ({ contract, accountAddress }) => {
                 <div className="posts">
                     {posts && posts.slice().reverse().map((post) => (
                         <div key={post.postId}>
-                            {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} /> : <></>}
+                            {post.metadata ? <Post postId={post.postId} contract={contract} postOwner={post.postOwner} timestamp={post.postTimestamp} textContent={post.metadata.textContent} postPicCIDs={post.metadata.imageCIDs} accountAddress={accountAddress}/> : <></>}
                         </div>
                     ))}
                 </div>

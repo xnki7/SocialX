@@ -90,6 +90,7 @@ const SavedPosts = ({ contract, accountAddress }) => {
                                     timestamp={post.postTimestamp}
                                     textContent={post.metadata.textContent}
                                     postPicCIDs={post.metadata.imageCIDs}
+                                    accountAddress={accountAddress}
                                 />
                             ) : (
                                 <></>

@@ -1,4 +1,4 @@
-const contractAddress = "0xD94b2B969a432D3D7D606032849A568e3Fc22c45";
+const contractAddress = "0x8015FdafCE3A62C4BadE290a3554A1f7a73195ea";
 
 const contractABI = [
 	{
@@ -54,6 +54,19 @@ const contractABI = [
 			}
 		],
 		"name": "deletePost",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_postOwner",
+				"type": "address"
+			}
+		],
+		"name": "deleteProfile",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -118,6 +131,19 @@ const contractABI = [
 				"type": "uint256"
 			}
 		],
+		"name": "reportPost",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_postId",
+				"type": "uint256"
+			}
+		],
 		"name": "savePost",
 		"outputs": [],
 		"stateMutability": "nonpayable",
@@ -132,6 +158,19 @@ const contractABI = [
 			}
 		],
 		"name": "unfollowUser",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "string",
+				"name": "_newProfileCID",
+				"type": "string"
+			}
+		],
+		"name": "updateProfile",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -189,6 +228,25 @@ const contractABI = [
 				"internalType": "string",
 				"name": "userProfileCID",
 				"type": "string"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "",
+				"type": "address"
+			}
+		],
+		"name": "bannedUsers",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",
