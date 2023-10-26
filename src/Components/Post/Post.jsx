@@ -269,7 +269,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                             </div>
                         </div>
                         {
-                            (accountAddress === postOwner ? <div><img className='delRepIcon' src={deleteIcon} alt="" onClick={deletePost} /></div> : <><img src={flag} className='delRepIcon' onClick={reportPost}/></>)
+                            (accountAddress === postOwner ? <div><img className='delRepIcon' src={deleteIcon} alt="" onClick={deletePost} /></div> : <><img src={isReported?flagged:flag} className='delRepIcon' onClick={reportPost}/></>)
                             // ****************
                         }
 
