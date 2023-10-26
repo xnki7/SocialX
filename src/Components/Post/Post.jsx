@@ -77,11 +77,11 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
         }
     }
 
-    const getIsPostReported = async() =>{
-        try{
+    const getIsPostReported = async () => {
+        try {
             const tx = await contract.isReported(postId);
             setIsReported(tx);
-        } catch (error){
+        } catch (error) {
             console.log("Error in getting post report data", error);
         }
     }
@@ -269,7 +269,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
                             </div>
                         </div>
                         {
-                            (accountAddress === postOwner ? <div><img className='delRepIcon' src={deleteIcon} alt="" onClick={deletePost} /></div> : <><img src={isReported?flagged:flag} className='delRepIcon' onClick={reportPost}/></>)
+                            (accountAddress === postOwner ? <div><img className='delRepIcon' src={deleteIcon} alt="" onClick={deletePost} /></div> : <><img src={flag} className='delRepIcon' onClick={reportPost}/></>)
                             // ****************
                         }
 

@@ -9,6 +9,7 @@ import "./SearchProfiles.css"
 const SearchProfiles = ({ contract, accountAddress }) => {
     const [profiles, setProfiles] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [search, setsearch] = useState('');
     const getAllProfiles = async () => {
         const tx = await contract.getAllProfiles();
         console.log(tx);
@@ -64,7 +65,7 @@ const SearchProfiles = ({ contract, accountAddress }) => {
             </div>
             <Navbar contract={contract} accountAddress={accountAddress} />
             <form>
-                <input type="text" placeholder='Search people...' />
+                <input type="text" placeholder='Search people...' onChange={(e) => { setsearch(e.target.value) }} />
                 {/* <button type="submit">Search</button> */}
             </form>
             {isLoading ? (
@@ -75,17 +76,20 @@ const SearchProfiles = ({ contract, accountAddress }) => {
                     <div className="overlay"></div>
                 </div>
             ) : (
-                <div className="profiles">
-                    {profiles.map((profile) => {
-                        return profile.metadata && (
-                            <ProfileCard
-                                key={profile.userAddress}
-                                address={profile.userAddress}
-                                username={profile.metadata.userName}
-                                image={`https://ipfs.io/ipfs/${profile.metadata.imageCID}`}
-                            />
-                        );
-                    })}
+                <div className="profi">
+                    {
+                        profiles.filter((profile) => {
+                            return search.toLowerCase() === "" ? profile : profile.metadata.userName.toLowerCase().includes(search);
+                        }).map((profile) => {
+                            return profile.metadata && (
+                                <ProfileCard
+                                    key={profile.userAddress}
+                                    address={profile.userAddress}
+                                    username={profile.metadata.userName}
+                                    image={`https://ipfs.io/ipfs/${profile.metadata.imageCID}`}
+                                />
+                            );
+                        })}
                 </div>
             )}
         </div>
@@ -93,4 +97,3 @@ const SearchProfiles = ({ contract, accountAddress }) => {
 }
 
 export default SearchProfiles
-
