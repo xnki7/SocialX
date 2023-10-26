@@ -1,4 +1,4 @@
-const contractAddress = "0x8015FdafCE3A62C4BadE290a3554A1f7a73195ea";
+const contractAddress = "0xE4367cB143E7C9ac5498079F64EEe67ac13B5349";
 
 const contractABI = [
 	{
@@ -67,19 +67,6 @@ const contractABI = [
 			}
 		],
 		"name": "deleteProfile",
-		"outputs": [],
-		"stateMutability": "nonpayable",
-		"type": "function"
-	},
-	{
-		"inputs": [
-			{
-				"internalType": "uint256",
-				"name": "_postId",
-				"type": "uint256"
-			}
-		],
-		"name": "deleteSavedPost",
 		"outputs": [],
 		"stateMutability": "nonpayable",
 		"type": "function"
@@ -667,6 +654,25 @@ const contractABI = [
 				"internalType": "struct SocialX.Post[]",
 				"name": "",
 				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "uint256",
+				"name": "_postId",
+				"type": "uint256"
+			}
+		],
+		"name": "isReported",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
 			}
 		],
 		"stateMutability": "view",

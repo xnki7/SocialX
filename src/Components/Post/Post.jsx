@@ -19,6 +19,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
     const [isSaved, setIsSaved] = useState(false);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
+    const [isReported, setIsReported] = useState(false);
 
     const showArrows = postPicCIDs && postPicCIDs.length > 1;
 
@@ -73,6 +74,15 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
             setIsSaved(tx);
         } catch (error) {
             console.error("Error getting post saved status:", error);
+        }
+    }
+
+    const getIsPostReported = async() =>{
+        try{
+            const tx = await contract.isReported(postId);
+            setIsReported(tx);
+        } catch (error){
+            console.log("Error in getting post report data", error);
         }
     }
 
@@ -167,6 +177,7 @@ const Post = ({ postId, contract, postOwner, timestamp, textContent, postPicCIDs
             getProfileData();
             getLikesNumber();
             getCommentsNumber();
+            getIsPostReported();
         }
     }, [])
 

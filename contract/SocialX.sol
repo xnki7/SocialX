@@ -129,17 +129,17 @@ contract SocialX {
     }
 
     // Function to delete a saved post
-    function deleteSavedPost(uint256 _postId) public {
-        Post storage savedPost = idToPost[_postId];
-        require(savedPost.postOwner != address(0), "Post does not exist");
+    // function deleteSavedPost(uint256 _postId) public {
+    //     Post storage savedPost = idToPost[_postId];
+    //     require(savedPost.postOwner != address(0), "Post does not exist");
 
-        Post[] storage savedPosts = userSavedPosts[msg.sender];
-        uint256 savedPostIndex = findSavedPostIndex(savedPosts, _postId);
-        require(savedPostIndex < savedPosts.length, "Saved post not found");
+    //     Post[] storage savedPosts = userSavedPosts[msg.sender];
+    //     uint256 savedPostIndex = findSavedPostIndex(savedPosts, _postId);
+    //     require(savedPostIndex < savedPosts.length, "Saved post not found");
 
-        savedPosts[savedPostIndex] = savedPosts[savedPosts.length - 1];
-        savedPosts.pop();
-    }
+    //     savedPosts[savedPostIndex] = savedPosts[savedPosts.length - 1];
+    //     savedPosts.pop();
+    // }
 
     // Function to find the index of a saved post
     function findSavedPostIndex(
@@ -446,5 +446,9 @@ contract SocialX {
 
     function getIsPostSaved(uint256 _postId) public view returns (bool) {
         return isPostSaved[msg.sender][_postId];
+    }
+
+    function isReported(uint256 _postId) public view returns (bool) {
+        return hasUserReportedPost[_postId][msg.sender];
     }
 }
