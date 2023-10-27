@@ -36,9 +36,9 @@ const CreateProfile = ({ contract }) => {
                     formData,
                     {
                         headers: {
-                            pinata_api_key: "b3909c367f38816509ea",
+                            pinata_api_key: "582fc7fc6539867bf62c",
                             pinata_secret_api_key:
-                                "d7e034abe6d3da97a2267aa7065ab20d513f8dc0e1015cdd7c9ed91c99088231",
+                                "57674f066b9ac2b728b99e60ca632ab60628a7ed04dd564600b819c01b4c55bc",
                         },
                     }
                 );
@@ -57,9 +57,9 @@ const CreateProfile = ({ contract }) => {
                 profileData,
                 {
                     headers: {
-                        pinata_api_key: "b3909c367f38816509ea",
+                        pinata_api_key: "582fc7fc6539867bf62c",
                         pinata_secret_api_key:
-                            "d7e034abe6d3da97a2267aa7065ab20d513f8dc0e1015cdd7c9ed91c99088231",
+                            "57674f066b9ac2b728b99e60ca632ab60628a7ed04dd564600b819c01b4c55bc",
                     },
                 }
             );
