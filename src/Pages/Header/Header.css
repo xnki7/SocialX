@@ -19,7 +19,7 @@
 .headerContainer .logoImg {
     margin: auto;
     width: 10rem;
-    padding-left: 3.5rem;
+    padding-left: 0rem;
 }
 
 .headerContainer button {
@@ -29,4 +29,9 @@
 
 .headerContainer button.postBtns {
     margin-right: 2rem;
+}
+
+.headerContainer img.logoo {
+    margin-left: 20px;
+    margin-top: 7px;
 }
