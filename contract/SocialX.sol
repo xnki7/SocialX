@@ -236,16 +236,15 @@ contract SocialX {
             allPosts[postIndex] = allPosts[allPosts.length - 1];
             allPosts.pop();
 
-            delete idToPost[_postId];
-
-            Post[] storage userPostList = userPosts[msg.sender];
+            Post[] storage userPostList = userPosts[idToPost[_postId].postOwner];
             uint256 userPostIndex = findUserPostIndex(userPostList, _postId);
             if (userPostIndex < userPostList.length) {
-                userPostList[userPostIndex] = userPostList[
-                    userPostList.length - 1
-                ];
+                userPostList[userPostIndex] = userPostList[userPostList.length - 1];
                 userPostList.pop();
             }
+
+
+            delete idToPost[_postId];
         }
     }
 
@@ -409,6 +408,12 @@ contract SocialX {
         return userPosts[_userAddress];
     }
 
+    function getUserPostsLength(
+        address _userAddress
+    ) public view returns (uint256) {
+        return userPosts[_userAddress].length;
+    }
+
     // Function to get user's saved posts
     function getUserSavedPosts() public view returns (Post[] memory) {
         return userSavedPosts[msg.sender];
@@ -448,7 +453,7 @@ contract SocialX {
         return isPostSaved[msg.sender][_postId];
     }
 
-    function isReported(uint256 _postId) public view returns (bool) {
+    function isReported(uint256 _postId) public view returns(bool){
         return hasUserReportedPost[_postId][msg.sender];
     }
 }

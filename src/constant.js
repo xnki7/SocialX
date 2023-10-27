@@ -1,4 +1,4 @@
-const contractAddress = "0xE4367cB143E7C9ac5498079F64EEe67ac13B5349";
+const contractAddress = "0x45F239Ee723Ff0fE895C899b453E8a8B207654D3";
 
 const contractABI = [
 	{
@@ -588,6 +588,25 @@ const contractABI = [
 				"internalType": "struct SocialX.Post[]",
 				"name": "",
 				"type": "tuple[]"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
+		"inputs": [
+			{
+				"internalType": "address",
+				"name": "_userAddress",
+				"type": "address"
+			}
+		],
+		"name": "getUserPostsLength",
+		"outputs": [
+			{
+				"internalType": "uint256",
+				"name": "",
+				"type": "uint256"
 			}
 		],
 		"stateMutability": "view",

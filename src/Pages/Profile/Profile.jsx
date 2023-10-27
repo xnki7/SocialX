@@ -147,23 +147,27 @@ const Profile = ({ contract, myAddress }) => {
 
     useEffect(() => {
         const fetchPostDetails = async () => {
-            setIsLoading(true);
-            const updatedPosts = await Promise.all(
-                posts.map(async (post) => {
-                    const uri = await contract.getPostCID(post.postId);
-                    let metadata = null;
-                    try {
-                        metadata = await fetchPostMetadata(uri);
-                    } catch (error) {
-                        console.error("Error fetching metadata:", error);
-                    }
-                    console.log("Metadata for postId", post.postId, ":", metadata);
-                    return { ...post, metadata };
-                })
-            );
-            console.log("Updated Posts:", updatedPosts);
-            setPosts(updatedPosts);
-            setIsLoading(false);
+            try {
+                setIsLoading(true);
+                const updatedPosts = await Promise.all(
+                    posts.map(async (post) => {
+                        const uri = await contract.getPostCID(post.postId);
+                        let metadata = null;
+                        try {
+                            metadata = await fetchPostMetadata(uri);
+                        } catch (error) {
+                            console.error("Error fetching metadata:", error);
+                        }
+                        console.log("Metadata for postId", post.postId, ":", metadata);
+                        return { ...post, metadata };
+                    })
+                );
+                console.log("Updated Posts:", updatedPosts);
+                setPosts(updatedPosts);
+                setIsLoading(false);
+            } catch (err) {
+                setIsLoading(false);
+            }
         };
 
         const fetchPosts = async () => {
